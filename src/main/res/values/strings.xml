@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Minesweeper Bilder</string>
+
+    <string name="smiley">☺</string>
+    <string name="flag">🏳️</string>
+    <string name="bomb">💣︎</string>
+    <string name="default_count">000</string>
+</resources>
