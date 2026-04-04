@@ -63,7 +63,7 @@ public class MineGridRecyclerAdapter extends RecyclerView.Adapter<MineGridRecycl
         }
 
         public void bind(final Cell cell) {
-            itemView.setBackgroundColor(Color.GRAY);
+            itemView.setBackground(new CellDrawable());
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -73,7 +73,7 @@ public class MineGridRecyclerAdapter extends RecyclerView.Adapter<MineGridRecycl
             });
 
             if (cell.isRevealed()) {
-                itemView.setBackgroundColor(Color.DKGRAY);
+                itemView.setBackground(new CellRevealedDrawable());
                 if (cell.getValue() == Cell.BOMB) {
                     if (isGameOver) {
                         itemView.setBackgroundColor(Color.RED);

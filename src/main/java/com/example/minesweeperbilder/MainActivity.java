@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
 
         gridRecyclerView = findViewById(R.id.activity_main_grid);
         gridRecyclerView.setLayoutManager(new GridLayoutManager(this, 10));
+        gridRecyclerView.setNestedScrollingEnabled(false);
         game = new MinesweeperGame(10, 10);
         mineGridRecyclerAdapter = new MineGridRecyclerAdapter(game.getMineGrid().getCells(), this);
         gridRecyclerView.setAdapter(mineGridRecyclerAdapter);
