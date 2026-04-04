@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/activity_main_grid"
+        app:layout_constraintBottom_toTopOf="@+id/mainGridLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,8 +25,9 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/default_count"
-            android:textSize="64dp"
-            android:paddingLeft="10dp"/>
+            android:textSize="64sp"
+            android:paddingStart="10dp"
+            android:paddingEnd="0dp"/>
 
         <TextView
             android:id="@+id/activity_main_smiley"
@@ -41,20 +42,55 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/default_count"
-            android:textSize="64dp"
-            android:gravity="right"
-            android:paddingRight="10dp"/>
+            android:textSize="64sp"
+            android:gravity="end"
+            android:paddingStart="0dp"
+            android:paddingEnd="10dp"/>
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/activity_main_grid"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.otaliastudios.zoom.ZoomLayout
+        android:id="@+id/mainGridLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="vertical|horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/upperPanelLayout"
+        app:layout_constraintBottom_toTopOf="@+id/bottomPanelLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:alignment="center"
+        app:animationDuration="0"
+        app:flingEnabled="true"
+        app:hasClickableChildren="true"
+        app:horizontalPanEnabled="true"
+        app:maxZoom="2.5"
+        app:maxZoomType="zoom"
+        app:minZoom="0.3"
+        app:minZoomType="zoom"
+        app:oneFingerScrollEnabled="false"
+        app:overPinchable="true"
+        app:overScrollHorizontal="false"
+        app:overScrollVertical="false"
+        app:scrollEnabled="true"
+        app:threeFingersScrollEnabled="true"
+        app:transformation="centerInside"
+        app:transformationGravity="auto"
+        app:twoFingersScrollEnabled="true"
+        app:verticalPanEnabled="true"
+        app:zoomEnabled="true"
+        tools:layout_editor_absoluteX="20dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activity_main_grid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </com.otaliastudios.zoom.ZoomLayout>
 
     <LinearLayout
         android:id="@+id/bottomPanelLayout"

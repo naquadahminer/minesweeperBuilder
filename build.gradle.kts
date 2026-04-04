@@ -36,6 +36,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.zoomlayout)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
