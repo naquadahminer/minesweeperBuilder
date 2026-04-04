@@ -34,7 +34,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/smiley"
-            android:textSize="64sp" />
+            android:textSize="40sp"
+            android:width="56dp"
+            android:height="56dp"
+            android:gravity="center"
+            android:layout_gravity="center"/>
 
         <TextView
             android:id="@+id/activity_main_timer"

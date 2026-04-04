@@ -23,6 +23,12 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        smiley = findViewById(R.id.activity_main_smiley);
+        smiley.post(() -> {
+            CellDrawable drawable = new CellDrawable();
+            drawable.setBounds(0, 0, smiley.getWidth(), smiley.getHeight());
+            smiley.setBackground(drawable);
+        });
 
         flag = findViewById(R.id.activity_main_flag);
         flag.setOnClickListener(view -> {
