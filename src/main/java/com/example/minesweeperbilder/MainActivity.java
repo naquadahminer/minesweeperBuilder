@@ -3,6 +3,9 @@ package com.example.minesweeperbilder;
 import android.annotation.SuppressLint;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,10 +18,11 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
     RecyclerView gridRecyclerView;
     MineGridRecyclerAdapter mineGridRecyclerAdapter;
     MinesweeperGame game;
-    TextView smiley, flag, flagsCount;
+    ImageView smiley;
+    TextView flag, flagsCount;
     boolean timerStarted;
 
-    @SuppressLint("DefaultLocale")
+    @SuppressLint({"DefaultLocale", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,14 +51,31 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
 
         flagsCount = findViewById(R.id.activity_main_flagsleft);
 
-        smiley = findViewById(R.id.activity_main_smiley);
-        smiley.setOnClickListener(v -> {
-            game = new MinesweeperGame(10, 10);
-            mineGridRecyclerAdapter.setCells(game.getMineGrid().getCells());
-            mineGridRecyclerAdapter.setGameOver(game.isGameOver());
-            timerStarted = false;
-            flagsCount.setText(String.format("%03d", game.getNumberOfBombs() - game.getFlagCount()));
+        smiley.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    CellReverseDrawable smileyClickedDrawable = new CellReverseDrawable();
+                    smileyClickedDrawable.setBounds(0, 0, smiley.getWidth(), smiley.getHeight());
+                    smiley.setBackground(smileyClickedDrawable);
+                    smiley.setImageResource(R.drawable.clicked_smiley);
+                    break;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    CellDrawable drawable = new CellDrawable();
+                    drawable.setBounds(0, 0, smiley.getWidth(), smiley.getHeight());
+                    smiley.setBackground(drawable);
+                    game = new MinesweeperGame(10, 10);
+                    mineGridRecyclerAdapter.setCells(game.getMineGrid().getCells());
+                    mineGridRecyclerAdapter.setGameOver(game.isGameOver());
+                    timerStarted = false;
+                    flagsCount.setText(String.format("%03d", game.getNumberOfBombs() - game.getFlagCount()));
+                    smiley.setImageResource(R.drawable.smiley);
+                    break;
+            }
+            return true;
         });
+
+
 
         gridRecyclerView = findViewById(R.id.activity_main_grid);
         gridRecyclerView.setLayoutManager(new GridLayoutManager(this, 10) {
@@ -79,10 +100,12 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
         if (game.isGameOver()) {
             mineGridRecyclerAdapter.setGameOver(game.isGameOver());
             game.getMineGrid().revealAllBombs();
+            smiley.setImageResource(R.drawable.dead_smiley);
         }
 
         if (game.isGameWon()) {
             game.getMineGrid().revealAllBombs();
+            smiley.setImageResource(R.drawable.cool_smiley);
         }
 
         mineGridRecyclerAdapter.setCells(game.getMineGrid().getCells());
