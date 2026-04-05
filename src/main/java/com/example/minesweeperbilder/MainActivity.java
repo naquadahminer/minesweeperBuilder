@@ -1,10 +1,8 @@
 package com.example.minesweeperbilder;
 
 import android.annotation.SuppressLint;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,8 +16,8 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
     RecyclerView gridRecyclerView;
     MineGridRecyclerAdapter mineGridRecyclerAdapter;
     MinesweeperGame game;
-    ImageView smiley;
-    TextView flag, flagsCount;
+    ImageView smiley, flag;
+    TextView flagsCount;
     boolean timerStarted;
 
     @SuppressLint({"DefaultLocale", "ClickableViewAccessibility"})
@@ -35,17 +33,21 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
         });
 
         flag = findViewById(R.id.activity_main_flag);
+        flag.post(() -> {
+            CellDrawable drawable = new CellDrawable();
+            drawable.setBounds(0, 0, flag.getWidth(), flag.getHeight());
+            flag.setBackground(drawable);
+        });
         flag.setOnClickListener(view -> {
             game.toggleMode();
             if (game.isFlagMode()) {
-                GradientDrawable border = new GradientDrawable();
-                border.setColor(0xFFFFFFFF);
-                border.setStroke(1, 0xFF000000);
-                flag.setBackground(border);
+                CellReverseDrawable drawable = new CellReverseDrawable();
+                drawable.setBounds(0, 0, flag.getWidth(), flag.getHeight());
+                flag.setBackground(drawable);
             } else {
-                GradientDrawable border = new GradientDrawable();
-                border.setColor(0xFFFFFFFF);
-                flag.setBackground(border);
+                CellDrawable drawable = new CellDrawable();
+                drawable.setBounds(0, 0, flag.getWidth(), flag.getHeight());
+                flag.setBackground(drawable);
             }
         });
 

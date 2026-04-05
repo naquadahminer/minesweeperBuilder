@@ -10,8 +10,8 @@ import android.graphics.drawable.Drawable;
 import androidx.annotation.NonNull;
 
 public class CellReverseDrawable extends Drawable {
-    private Paint paint = new Paint();
-    private int borderSize = 10;
+    private final Paint paint = new Paint();
+    private final int borderSize = 10;
 
     @Override
     public void draw(@NonNull Canvas canvas) {
