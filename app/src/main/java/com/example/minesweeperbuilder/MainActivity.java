@@ -2,6 +2,7 @@ package com.example.minesweeperbuilder;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,14 +18,27 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
     MineGridRecyclerAdapter mineGridRecyclerAdapter;
     MinesweeperGame game;
     ImageView smiley, flag;
-    TextView flagsCount;
-    boolean timerStarted;
+    TextView flagsCount, timer;
+    boolean timerStarted = false;
+    Handler timerHandler = new Handler();
+    Runnable timerRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (!game.isGameOver() && !game.isGameWon()) {
+                game.incrementSeconds();
+                int seconds = game.getElapsedSeconds();
+                timer.setText(String.format(Locale.getDefault(), "%03d", Math.min(seconds, 999)));
+                timerHandler.postDelayed(this, 1000);
+            }
+        }
+    };
 
     @SuppressLint({"DefaultLocale", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        timer = findViewById(R.id.activity_main_timer);
         smiley = findViewById(R.id.activity_main_smiley);
         smiley.post(() -> {
             CellDrawable drawable = new CellDrawable();
@@ -71,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
                     mineGridRecyclerAdapter.setGameOver(game.isGameOver());
                     timerStarted = false;
                     flagsCount.setText(String.format("%03d", game.getNumberOfBombs() - game.getFlagCount()));
+                    timer.setText(String.format(Locale.getDefault(), "%03d", 0));
                     smiley.setImageResource(R.drawable.smiley);
                     break;
             }
@@ -95,8 +110,9 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
 
     @Override
     public void onCellClick(Cell cell) {
-        game.handleCellClick(cell);
+        startTimer();
 
+        game.handleCellClick(cell);
         flagsCount.setText(String.format(Locale.getDefault(), "%03d", game.getNumberOfBombs() - game.getFlagCount()));
 
         if (game.isGameOver()) {
@@ -111,5 +127,12 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
         }
 
         mineGridRecyclerAdapter.setCells(game.getMineGrid().getCells());
+    }
+
+    private void startTimer() {
+        if (!timerStarted) {
+            timerStarted = true;
+            timerHandler.postDelayed(timerRunnable, 1000);
+        }
     }
 }

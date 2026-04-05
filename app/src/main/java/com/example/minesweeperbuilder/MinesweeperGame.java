@@ -8,8 +8,10 @@ public class MinesweeperGame {
     private boolean clearMode;
     private boolean flagMode;
     private boolean isGameOver;
+    private boolean gameRunning;
     private int flagsPlaced;
     private int numberOfBombs;
+    private int elapsedSeconds;
 
 
     public MinesweeperGame(int size, int numberOfBombs) {
@@ -20,6 +22,24 @@ public class MinesweeperGame {
         mineGrid = new MineGrid(size);
         mineGrid.generateGrid(numberOfBombs);
         this.isGameOver = false;
+        this.gameRunning = false;
+        this.elapsedSeconds = 0;
+    }
+
+    public boolean isGameRunning() {
+        return gameRunning;
+    }
+
+    public int getElapsedSeconds() {
+        return elapsedSeconds;
+    }
+
+    public void incrementSeconds() {
+        elapsedSeconds++;
+    }
+
+    public void resetSeconds() {
+        elapsedSeconds = 0;
     }
 
     public int getNumberOfBombs() {
