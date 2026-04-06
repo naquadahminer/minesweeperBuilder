@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
                     drawable.setBounds(0, 0, smiley.getWidth(), smiley.getHeight());
                     smiley.setBackground(drawable);
                     game = new MinesweeperGame(10, 10);
+                    timerHandler.removeCallbacks(timerRunnable);
                     mineGridRecyclerAdapter.setCells(game.getMineGrid().getCells());
                     mineGridRecyclerAdapter.setGameOver(game.isGameOver());
                     timerStarted = false;
