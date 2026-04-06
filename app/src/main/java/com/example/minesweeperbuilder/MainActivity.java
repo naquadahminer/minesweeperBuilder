@@ -115,11 +115,12 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
 
     @Override
     public void onCellClick(Cell cell) {
+        int cellIndex = game.getMineGrid().getCells().indexOf(cell);
         if (game.isFieldClosed()) {
-            game.getMineGrid().generateGrid(10, game.getMineGrid().getCells().indexOf(cell));
+            game.getMineGrid().generateGrid(10, cellIndex);
             game.setFieldClosed(false);
         }
-        game.handleCellClick(cell);
+        game.handleCellClick(game.getMineGrid().getCells().get(cellIndex));
         startTimer();
         flagsCount.setText(String.format(Locale.getDefault(), "%03d", game.getNumberOfBombs() - game.getFlagCount()));
 
@@ -130,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
         }
 
         if (game.isGameWon()) {
-            game.getMineGrid().revealAllBombs();
+            game.getMineGrid().setAllFlags();
             smiley.setImageResource(R.drawable.cool_smiley);
         }
 

@@ -42,7 +42,6 @@ public class MineGrid {
                         }
                     }
                     if (countBombs > 0) {
-                        System.out.println(toIndex(x, y) == clickIndex);
                         cells.set(toIndex(x, y), new Cell(countBombs));
                     }
                 }
@@ -82,6 +81,14 @@ public class MineGrid {
         }
 
         return adjacentFlagged;
+    }
+
+    public void setAllFlags() {
+        for (Cell cell: cells) {
+            if (cell.getValue() == Cell.BOMB) {
+                cell.setFlagged(true);
+            }
+        }
     }
 
     public void revealAllBombs() {
