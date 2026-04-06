@@ -69,6 +69,19 @@ public class MineGrid {
         return adjacentCells;
     }
 
+    public List<Cell> adjacentFlagged(int x, int y) {
+        List<Cell> adjacentFlagged = new ArrayList<>();
+        List<Cell> adjacentCells = adjacentCells(x, y);
+
+        for (Cell cell: adjacentCells) {
+            if(cell.isFlagged()) {
+                adjacentFlagged.add(cell);
+            }
+        }
+
+        return adjacentFlagged;
+    }
+
     public void revealAllBombs() {
         for (Cell cell: cells) {
             if (cell.getValue() == Cell.BOMB) {

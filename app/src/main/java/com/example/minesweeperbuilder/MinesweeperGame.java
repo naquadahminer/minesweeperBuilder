@@ -2,6 +2,7 @@ package com.example.minesweeperbuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 public class MinesweeperGame {
     private MineGrid mineGrid;
@@ -26,20 +27,12 @@ public class MinesweeperGame {
         this.elapsedSeconds = 0;
     }
 
-    public boolean isGameRunning() {
-        return gameRunning;
-    }
-
     public int getElapsedSeconds() {
         return elapsedSeconds;
     }
 
     public void incrementSeconds() {
         elapsedSeconds++;
-    }
-
-    public void resetSeconds() {
-        elapsedSeconds = 0;
     }
 
     public int getNumberOfBombs() {
@@ -62,10 +55,13 @@ public class MinesweeperGame {
             if (!clearMode) {
                 flag(cell);
             }
+            if (cell.getValue() != Cell.BOMB && cell.getValue() != Cell.BLANK) {
+                regularChording(cell);
+            }
         }
     }
 
-    public void clear(Cell cell) {
+    private void clear(Cell cell) {
         int index = getMineGrid().getCells().indexOf(cell);
         getMineGrid().getCells().get(index).setRevealed(true);
 
@@ -101,6 +97,24 @@ public class MinesweeperGame {
             }
         } else if (cell.getValue() == Cell.BOMB) {
             isGameOver = true;
+        }
+    }
+
+    private void regularChording(Cell cell) {
+        int index = getMineGrid().getCells().indexOf(cell);
+        int[] cellPos = getMineGrid().toXY(index);
+        List<Cell> adjacentCells = mineGrid.adjacentCells(cellPos[0], cellPos[1]);
+
+        if (cell.getValue() == mineGrid.adjacentFlagged(cellPos[0], cellPos[1]).size()) {
+            for(Cell adjacentCell: adjacentCells) {
+                if (!adjacentCell.isFlagged() && !adjacentCell.isRevealed()) {
+                    if (adjacentCell.getValue() != Cell.BLANK) {
+                        adjacentCell.setRevealed(true);
+                    } else {
+                        clear(adjacentCell);
+                    }
+                }
+            }
         }
     }
 
