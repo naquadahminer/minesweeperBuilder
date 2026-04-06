@@ -80,7 +80,11 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
                     CellDrawable drawable = new CellDrawable();
                     drawable.setBounds(0, 0, smiley.getWidth(), smiley.getHeight());
                     smiley.setBackground(drawable);
-                    game = new MinesweeperGame(10, 10);
+                    drawable.setBounds(0, 0, flag.getWidth(), flag.getHeight());
+                    flag.setBackground(drawable);
+                    System.out.println(game.getMineGrid().getCells());
+                    game = new MinesweeperGame(10, 10, 10);
+                    System.out.println(game.getMineGrid().getCells());
                     timerHandler.removeCallbacks(timerRunnable);
                     mineGridRecyclerAdapter.setCells(game.getMineGrid().getCells());
                     mineGridRecyclerAdapter.setGameOver(game.isGameOver());
@@ -103,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
             }
         });
         gridRecyclerView.setNestedScrollingEnabled(false);
-        game = new MinesweeperGame(10, 10);
+        game = new MinesweeperGame(10, 10, 10);
         mineGridRecyclerAdapter = new MineGridRecyclerAdapter(game.getMineGrid().getCells(), this);
         gridRecyclerView.setAdapter(mineGridRecyclerAdapter);
         flagsCount.setText(String.format("%03d", game.getNumberOfBombs() - game.getFlagCount()));
@@ -111,9 +115,13 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
 
     @Override
     public void onCellClick(Cell cell) {
+        int cellIndex = game.getMineGrid().getCells().indexOf(cell);
+        if (game.isFieldClosed()) {
+            game.getMineGrid().generateGrid(10, cellIndex);
+            game.setFieldClosed(false);
+        }
+        game.handleCellClick(game.getMineGrid().getCells().get(cellIndex));
         startTimer();
-
-        game.handleCellClick(cell);
         flagsCount.setText(String.format(Locale.getDefault(), "%03d", game.getNumberOfBombs() - game.getFlagCount()));
 
         if (game.isGameOver()) {
@@ -123,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
         }
 
         if (game.isGameWon()) {
-            game.getMineGrid().revealAllBombs();
+            game.getMineGrid().setAllFlags();
             smiley.setImageResource(R.drawable.cool_smiley);
         }
 

@@ -6,32 +6,33 @@ import java.util.Random;
 
 public class MineGrid {
     private List<Cell> cells;
-    private int size;
+    private int height, width;
 
-    public MineGrid(int size){
-        this.size = size;
+    public MineGrid(int height, int width){
+        this.height = height;
+        this.width = width;
         cells = new ArrayList<>();
 
-        for (int i = 0; i < size*size; i++) {
+        for (int i = 0; i < height*width; i++) {
             cells.add(new Cell(Cell.BLANK));
         }
     }
 
-    public void generateGrid(int numberBombs){
+    public void generateGrid(int numberBombs, int clickIndex){
         int bombsPlaced = 0;
         while(bombsPlaced < numberBombs){
-            int x = new Random().nextInt(size);
-            int y = new Random().nextInt(size);
+            int x = new Random().nextInt(width);
+            int y = new Random().nextInt(height);
 
             int index = toIndex(x,y);
-            if(cells.get(index).getValue() == Cell.BLANK){
+            if(cells.get(index).getValue() == Cell.BLANK && index != clickIndex){
                 cells.set(index, new Cell(Cell.BOMB));
                 bombsPlaced++;
             }
         }
 
-        for (int x = 0; x < size; x++) {
-            for (int y = 0; y < size; y++) {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
                 if (cellAt(x, y).getValue() != Cell.BOMB){
                     List<Cell> adjacentCells = adjacentCells(x, y);
                     int countBombs = 0;
@@ -82,6 +83,14 @@ public class MineGrid {
         return adjacentFlagged;
     }
 
+    public void setAllFlags() {
+        for (Cell cell: cells) {
+            if (cell.getValue() == Cell.BOMB) {
+                cell.setFlagged(true);
+            }
+        }
+    }
+
     public void revealAllBombs() {
         for (Cell cell: cells) {
             if (cell.getValue() == Cell.BOMB) {
@@ -91,17 +100,17 @@ public class MineGrid {
     }
 
     public int toIndex(int x, int y) {
-        return x + (y*size);
+        return x + (y*width);
     }
 
     public int[] toXY(int index){
-        int y = index / size;
-        int x = index - (y * size);
+        int y = index / width;
+        int x = index - (y * width);
         return new int[]{x,y};
     }
 
     public Cell cellAt(int x, int y){
-        if (x < 0 || x >= size || y < 0 || y >= size){
+        if (x < 0 || x >= width || y < 0 || y >= height){
             return null;
         }
         return cells.get(toIndex(x, y));
