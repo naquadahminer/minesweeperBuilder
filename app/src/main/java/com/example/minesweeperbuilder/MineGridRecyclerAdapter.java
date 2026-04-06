@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -54,12 +55,12 @@ public class MineGridRecyclerAdapter extends RecyclerView.Adapter<MineGridRecycl
     }
 
     class MineTileViewHolder extends RecyclerView.ViewHolder {
-        TextView valueTextView;
+        ImageView valueImageView;
 
         public MineTileViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            valueTextView = itemView.findViewById(R.id.item_cell_value);
+            valueImageView = itemView.findViewById(R.id.item_cell_value);
         }
 
         public void bind(final Cell cell) {
@@ -78,31 +79,30 @@ public class MineGridRecyclerAdapter extends RecyclerView.Adapter<MineGridRecycl
                     if (isGameOver) {
                         itemView.setBackgroundColor(Color.RED);
                     }
-                    valueTextView.setText(R.string.bomb);
+                    valueImageView.setBackgroundResource(R.drawable.mine);
                 } else if (cell.getValue() == Cell.BLANK) {
-                    valueTextView.setText("");
+                    valueImageView.setImageResource(R.color.transparent);
                 } else {
-                    valueTextView.setText(String.valueOf(cell.getValue()));
                     if (cell.getValue() == 1) {
-                        valueTextView.setTextColor(Color.BLUE);
+                        valueImageView.setImageResource(R.drawable.one);
                     } else if (cell.getValue() == 2) {
-                        valueTextView.setTextColor(Color.GREEN);
+                        valueImageView.setImageResource(R.drawable.two);
                     } else if (cell.getValue() == 3) {
-                        valueTextView.setTextColor(Color.RED);
+                        valueImageView.setImageResource(R.drawable.three);
                     } else if (cell.getValue() == 4) {
-                        valueTextView.setTextColor(Color.rgb(255, 22, 249) );
+                        valueImageView.setImageResource(R.drawable.four);
                     } else if (cell.getValue() == 5) {
-                        valueTextView.setTextColor(Color.rgb(138, 74, 15));
+                        valueImageView.setImageResource(R.drawable.five);
                     } else if (cell.getValue() == 6) {
-                        valueTextView.setTextColor(Color.CYAN);
+                        valueImageView.setImageResource(R.drawable.six);
                     } else if (cell.getValue() == 7) {
-                        valueTextView.setTextColor(Color.LTGRAY);
+                        valueImageView.setImageResource(R.drawable.seven);
                     } else if (cell.getValue() == 8) {
-                        valueTextView.setTextColor(Color.DKGRAY);
+                        valueImageView.setImageResource(R.drawable.eight);
                     }
                 }
             } else if (cell.isFlagged()) {
-                valueTextView.setText(R.string.flag);
+                valueImageView.setImageResource(R.drawable.flag);
             }
         }
     }

@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Minesweeper Bilder</string>
 
-    <string name="smiley">☺</string>
-    <string name="flag">🚩</string>
-    <string name="bomb">💣︎</string>
+    <string name="smiley">smiley face</string>
+    <string name="flag">flag</string>
+    <string name="mine">mine︎</string>
     <string name="default_count">000</string>
 </resources>
