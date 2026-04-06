@@ -1,29 +1,29 @@
 package com.example.minesweeperbuilder;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 
 public class MinesweeperGame {
     private MineGrid mineGrid;
     private boolean clearMode;
     private boolean flagMode;
     private boolean isGameOver;
-    private boolean gameRunning;
+    private boolean fieldClosed;
     private int flagsPlaced;
     private int numberOfBombs;
     private int elapsedSeconds;
 
 
-    public MinesweeperGame(int size, int numberOfBombs) {
+    public MinesweeperGame(int height, int width, int numberOfBombs) {
+        this.mineGrid = new MineGrid(height, width);
         this.clearMode = true;
         this.flagMode = false;
         this.flagsPlaced = 0;
         this.numberOfBombs = numberOfBombs;
-        mineGrid = new MineGrid(size);
-        mineGrid.generateGrid(numberOfBombs);
         this.isGameOver = false;
-        this.gameRunning = false;
+        this.fieldClosed = true;
         this.elapsedSeconds = 0;
     }
 
@@ -48,6 +48,7 @@ public class MinesweeperGame {
     }
 
     public void handleCellClick(Cell cell){
+
         if (!isGameOver && !isGameWon()) {
             if (clearMode) {
                 clear(cell);
@@ -157,5 +158,13 @@ public class MinesweeperGame {
 
     public boolean isGameOver() {
         return isGameOver;
+    }
+
+    public boolean isFieldClosed() {
+        return fieldClosed;
+    }
+
+    public void setFieldClosed(boolean fieldClosed) {
+        this.fieldClosed = fieldClosed;
     }
 }
