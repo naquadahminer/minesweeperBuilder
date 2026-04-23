@@ -16,6 +16,7 @@ public class CellDrawable extends Drawable {
         int w = getBounds().width();
         int h = getBounds().height();
         int b = borderSize;
+        android.util.Log.d("CellDrawable", "draw called: w=" + w + " h=" + h);
 
         paint.setColor(0xFFe5e5e5);
         Path top = new Path();

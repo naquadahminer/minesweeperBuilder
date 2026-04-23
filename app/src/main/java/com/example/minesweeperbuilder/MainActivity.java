@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
     ImageView smiley, flag;
     TextView flagsCount, timer;
     boolean timerStarted = false;
+    int padding = 30;
     Handler timerHandler = new Handler();
     Runnable timerRunnable = new Runnable() {
         @Override
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
             CellDrawable drawable = new CellDrawable();
             drawable.setBounds(0, 0, smiley.getWidth(), smiley.getHeight());
             smiley.setBackground(drawable);
+            smiley.setPadding(padding, padding, padding, padding);
         });
 
         flag = findViewById(R.id.activity_main_flag);
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
                     smileyClickedDrawable.setBounds(0, 0, smiley.getWidth(), smiley.getHeight());
                     smiley.setBackground(smileyClickedDrawable);
                     smiley.setImageResource(R.drawable.clicked_smiley);
+                    smiley.setPadding(padding, padding, padding, padding);
                     break;
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
@@ -82,9 +85,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
                     smiley.setBackground(drawable);
                     drawable.setBounds(0, 0, flag.getWidth(), flag.getHeight());
                     flag.setBackground(drawable);
-                    System.out.println(game.getMineGrid().getCells());
                     game = new MinesweeperGame(10, 10, 10);
-                    System.out.println(game.getMineGrid().getCells());
                     timerHandler.removeCallbacks(timerRunnable);
                     mineGridRecyclerAdapter.setCells(game.getMineGrid().getCells());
                     mineGridRecyclerAdapter.setGameOver(game.isGameOver());
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
                     flagsCount.setText(String.format("%03d", game.getNumberOfBombs() - game.getFlagCount()));
                     timer.setText(String.format(Locale.getDefault(), "%03d", 0));
                     smiley.setImageResource(R.drawable.smiley);
+                    smiley.setPadding(padding, padding, padding, padding);
                     break;
             }
             return true;
@@ -128,11 +130,13 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
             mineGridRecyclerAdapter.setGameOver(game.isGameOver());
             game.getMineGrid().revealAllBombs();
             smiley.setImageResource(R.drawable.dead_smiley);
+            smiley.setPadding(padding, padding, padding, padding);
         }
 
         if (game.isGameWon()) {
             game.getMineGrid().setAllFlags();
             smiley.setImageResource(R.drawable.cool_smiley);
+            smiley.setPadding(padding, padding, padding, padding);
         }
 
         mineGridRecyclerAdapter.setCells(game.getMineGrid().getCells());

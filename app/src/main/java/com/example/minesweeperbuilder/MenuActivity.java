@@ -1,6 +1,8 @@
 package com.example.minesweeperbuilder;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,10 +17,11 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_menu);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        Button gameButton = findViewById(R.id.menu_button_game);
+        gameButton.setOnClickListener(view -> {
+            Intent intent = new Intent(MenuActivity.this, MainActivity.class);
+            startActivity(intent);
         });
     }
 }
