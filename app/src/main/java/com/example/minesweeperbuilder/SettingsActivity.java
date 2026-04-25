@@ -19,7 +19,7 @@ public class SettingsActivity extends AppCompatActivity {
     TextView currentlyChosenButton;
     Settings settings;
     View content;
-    RadioGroup difficultyGroup;
+    RadioGroup difficultyGroup, controlGroup;
     CheckBox portraitOrientation;
 
 
@@ -110,6 +110,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         android.util.Log.d("Settings", "loading tab, difficulty = " + settings.difficulty);
 
+        // finding difficultyRadioGroup. if the correct tab was used it'll have value, and in that case we can update its contents as well as set a onClickListener
         difficultyGroup = content.findViewById(R.id.difficulty_group);
         if (difficultyGroup != null) {
             updateDifficutlyRadio(difficultyGroup);
@@ -120,6 +121,12 @@ public class SettingsActivity extends AppCompatActivity {
         if (portraitOrientation != null) {
             updateOrientationCheckbox();
             setupOrientationListener(portraitOrientation);
+        }
+
+        controlGroup = content.findViewById(R.id.flag_or_explore);
+        if (controlGroup != null) {
+            updateControlRadio(controlGroup);
+            setupControlListener(controlGroup);
         }
     }
 
@@ -135,6 +142,14 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void updateOrientationCheckbox() {
         portraitOrientation.setChecked(settings.portraitOrientation);
+    }
+
+    private void updateControlRadio(RadioGroup radio) {
+        if (settings.explore) {
+            radio.check(R.id.explore_radio);
+        } else {
+            radio.check(R.id.flag_radio);
+        }
     }
 
     private void setupDifficultyListener(RadioGroup difficultyGroup) {
@@ -153,6 +168,17 @@ public class SettingsActivity extends AppCompatActivity {
     private void setupOrientationListener(CheckBox cBox) {
         cBox.setOnClickListener(view -> {
             settings.portraitOrientation = !settings.portraitOrientation;
+            settings.save(this);
+        });
+    }
+
+    private void setupControlListener(RadioGroup controlGroup) {
+        controlGroup.setOnCheckedChangeListener((g, checkedId) -> {
+            if (checkedId == R.id.flag_radio) {
+                settings.explore = false;
+            } else {
+                settings.explore = true;
+            }
             settings.save(this);
         });
     }

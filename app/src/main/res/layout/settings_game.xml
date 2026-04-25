@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/textView3"
+        android:id="@+id/difficultyTextView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#dddddd"
@@ -46,7 +46,7 @@
             android:id="@+id/settings_custom_radio"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="Custom"/>
+            android:text="Custom (!!!)"/>
 
     </RadioGroup>
 
@@ -61,5 +61,36 @@
         android:layout_height="40dp"
         android:text="Portrait orientation" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#777777" />
+
+    <TextView
+        android:id="@+id/controlsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#dddddd"
+        android:gravity="center_vertical"
+        android:paddingStart="15dp"
+        android:text="Controls" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/flag_or_explore">
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Flag"
+            android:id="@+id/flag_radio"/>
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Explore"
+            android:id="@+id/explore_radio"/>
+    </RadioGroup>
 
 </LinearLayout>

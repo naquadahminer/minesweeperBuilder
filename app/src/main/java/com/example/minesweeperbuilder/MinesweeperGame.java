@@ -139,6 +139,16 @@ public class MinesweeperGame {
         flagMode = !flagMode;
     }
 
+    public void setMode(boolean explore) {
+        if (explore) {
+            flagMode = false;
+            clearMode = true;
+        } else {
+            flagMode = true;
+            clearMode = false;
+        }
+    }
+
     public void flag(Cell cell) {
         if (!cell.isRevealed()) {
             cell.setFlagged(!cell.isFlagged());

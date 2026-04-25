@@ -21,7 +21,10 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
     TextView flagsCount, timer;
     boolean timerStarted = false;
     int padding = 30;
+    int smallerCoordinate, largerCoordinate;
     Settings settings;
+
+    // timer and it's displaying
     Handler timerHandler = new Handler();
     Runnable timerRunnable = new Runnable() {
         @Override
@@ -43,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
 
         settings = new Settings();
         settings.load(this);
+        smallerCoordinate = Math.min(settings.difficulty.width, settings.difficulty.height);
+        largerCoordinate = Math.max(settings.difficulty.width, settings.difficulty.height);
 
         timer = findViewById(R.id.activity_main_timer);
         smiley = findViewById(R.id.activity_main_smiley);
@@ -55,25 +60,15 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
 
         flag = findViewById(R.id.activity_main_flag);
         flag.post(() -> {
-            CellDrawable drawable = new CellDrawable();
-            drawable.setBounds(0, 0, flag.getWidth(), flag.getHeight());
-            flag.setBackground(drawable);
+            flagBorderUpdate();
         });
         flag.setOnClickListener(view -> {
             game.toggleMode();
-            if (game.isFlagMode()) {
-                CellReverseDrawable drawable = new CellReverseDrawable();
-                drawable.setBounds(0, 0, flag.getWidth(), flag.getHeight());
-                flag.setBackground(drawable);
-            } else {
-                CellDrawable drawable = new CellDrawable();
-                drawable.setBounds(0, 0, flag.getWidth(), flag.getHeight());
-                flag.setBackground(drawable);
-            }
+            flagBorderUpdate();
         });
 
         flagsCount = findViewById(R.id.activity_main_flagsleft);
-
+        // smiley click logic
         smiley.setOnTouchListener((v, event) -> {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
@@ -105,19 +100,21 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
         });
 
 
-
+        // generating minegrid. depending on the orientation it'll use the lower or higher value of height and width for the field displaying width
         gridRecyclerView = findViewById(R.id.activity_main_grid);
-        gridRecyclerView.setLayoutManager(new GridLayoutManager(this, (settings.portraitOrientation) ? Math.min(settings.difficulty.width, settings.difficulty.height) : Math.max(settings.difficulty.width, settings.difficulty.height)) {
+        gridRecyclerView.setLayoutManager(new GridLayoutManager(this, (settings.portraitOrientation) ? smallerCoordinate : largerCoordinate) {
             @Override
             public boolean canScrollVertically() {
                 return false;
             }
         });
         gridRecyclerView.setNestedScrollingEnabled(false);
-        game = new MinesweeperGame(settings.difficulty.height, settings.difficulty.width, settings.difficulty.bombs);
+        game = new MinesweeperGame((settings.portraitOrientation) ? largerCoordinate : smallerCoordinate, (settings.portraitOrientation) ? smallerCoordinate : largerCoordinate, settings.difficulty.bombs);
         mineGridRecyclerAdapter = new MineGridRecyclerAdapter(game.getMineGrid().getCells(), this);
         gridRecyclerView.setAdapter(mineGridRecyclerAdapter);
         flagsCount.setText(String.format("%03d", game.getNumberOfBombs() - game.getFlagCount()));
+        game.setMode(settings.explore);
+        flagBorderUpdate();
     }
 
     @Override
@@ -151,6 +148,18 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
         if (!timerStarted) {
             timerStarted = true;
             timerHandler.postDelayed(timerRunnable, 1000);
+        }
+    }
+
+    private void flagBorderUpdate() {
+        if (game.isFlagMode()) {
+            CellReverseDrawable drawable = new CellReverseDrawable();
+            drawable.setBounds(0, 0, flag.getWidth(), flag.getHeight());
+            flag.setBackground(drawable);
+        } else {
+            CellDrawable drawable = new CellDrawable();
+            drawable.setBounds(0, 0, flag.getWidth(), flag.getHeight());
+            flag.setBackground(drawable);
         }
     }
 }

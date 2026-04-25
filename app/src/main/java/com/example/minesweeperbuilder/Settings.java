@@ -9,6 +9,7 @@ public class Settings {
     public Difficulty difficulty = Difficulty.BEGINNER;
     public boolean soundEnabled = true;
     public boolean portraitOrientation = true;
+    public boolean explore = true;
 
     public void save(Context context) {
         SharedPreferences.Editor editor = context
@@ -17,6 +18,7 @@ public class Settings {
         editor.putString("difficulty", difficulty.name());
         editor.putBoolean("soundEnabled", soundEnabled);
         editor.putBoolean("portraitOrientation", portraitOrientation);
+        editor.putBoolean("explore", explore);
         editor.apply();
     }
 
@@ -27,5 +29,6 @@ public class Settings {
         difficulty = Difficulty.valueOf(savedName);
         soundEnabled = prefs.getBoolean("soundEnabled", soundEnabled);
         portraitOrientation = prefs.getBoolean("portraitOrientation", portraitOrientation);
+        explore = prefs.getBoolean("explore", explore);
     }
 }
