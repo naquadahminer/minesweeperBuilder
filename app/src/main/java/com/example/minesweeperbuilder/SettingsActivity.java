@@ -3,6 +3,7 @@ package com.example.minesweeperbuilder;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -19,6 +20,7 @@ public class SettingsActivity extends AppCompatActivity {
     Settings settings;
     View content;
     RadioGroup difficultyGroup;
+    CheckBox portraitOrientation;
 
 
 
@@ -113,6 +115,12 @@ public class SettingsActivity extends AppCompatActivity {
             updateDifficutlyRadio(difficultyGroup);
             setupDifficultyListener(difficultyGroup);
         }
+
+        portraitOrientation = content.findViewById(R.id.portrait_orientation);
+        if (portraitOrientation != null) {
+            updateOrientationCheckbox();
+            setupOrientationListener(portraitOrientation);
+        }
     }
 
     private void updateDifficutlyRadio(RadioGroup radio) {
@@ -123,13 +131,14 @@ public class SettingsActivity extends AppCompatActivity {
         } else if (settings.difficulty == Difficulty.EXPERT) {
             radio.check(R.id.settings_expert_radio);
         }
+    }
 
+    private void updateOrientationCheckbox() {
+        portraitOrientation.setChecked(settings.portraitOrientation);
     }
 
     private void setupDifficultyListener(RadioGroup difficultyGroup) {
         difficultyGroup.setOnCheckedChangeListener((g, checkedId) -> {
-            android.util.Log.d("Settings", "listener fired, checkedId = " + checkedId);
-            android.util.Log.d("Settings", "beginner id = " + R.id.settings_beginner_radio);
             if (checkedId == R.id.settings_beginner_radio) {
                 settings.difficulty = Difficulty.BEGINNER;
             } else if (checkedId == R.id.settings_intermediate_radio) {
@@ -137,7 +146,13 @@ public class SettingsActivity extends AppCompatActivity {
             } else if (checkedId == R.id.settings_expert_radio) {
                 settings.difficulty = Difficulty.EXPERT;
             }
-            android.util.Log.d("Settings", "after change, difficulty = " + settings.difficulty);
+            settings.save(this);
+        });
+    }
+
+    private void setupOrientationListener(CheckBox cBox) {
+        cBox.setOnClickListener(view -> {
+            settings.portraitOrientation = !settings.portraitOrientation;
             settings.save(this);
         });
     }

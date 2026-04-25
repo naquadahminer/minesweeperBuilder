@@ -50,4 +50,16 @@
 
     </RadioGroup>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#777777" />
+
+    <CheckBox
+        android:id="@+id/portrait_orientation"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="Portrait orientation" />
+
+
 </LinearLayout>

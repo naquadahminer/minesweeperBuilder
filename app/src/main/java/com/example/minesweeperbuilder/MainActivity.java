@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
 
 
         gridRecyclerView = findViewById(R.id.activity_main_grid);
-        gridRecyclerView.setLayoutManager(new GridLayoutManager(this, settings.difficulty.width) {
+        gridRecyclerView.setLayoutManager(new GridLayoutManager(this, (settings.portraitOrientation) ? Math.min(settings.difficulty.width, settings.difficulty.height) : Math.max(settings.difficulty.width, settings.difficulty.height)) {
             @Override
             public boolean canScrollVertically() {
                 return false;
