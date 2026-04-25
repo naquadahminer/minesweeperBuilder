@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#dddddd"
+        android:gravity="center_vertical"
+        android:paddingStart="15dp"
+        android:text="Difficulty" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:id="@+id/difficulty_group">
+
+        <RadioButton
+            android:id="@+id/settings_beginner_radio"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Beginner (8x8)"/>
+
+        <RadioButton
+            android:id="@+id/settings_intermediate_radio"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Intermediate (16x16)"/>
+
+        <RadioButton
+            android:id="@+id/settings_expert_radio"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Expert (30x16)"/>
+
+        <RadioButton
+            android:id="@+id/settings_custom_radio"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Custom"/>
+
+    </RadioGroup>
+
+</LinearLayout>
