@@ -10,6 +10,7 @@ public class Settings {
     public boolean soundEnabled = true;
     public boolean portraitOrientation = true;
     public boolean explore = true;
+    public boolean forcedNF = false;
 
     public void save(Context context) {
         SharedPreferences.Editor editor = context
@@ -19,6 +20,7 @@ public class Settings {
         editor.putBoolean("soundEnabled", soundEnabled);
         editor.putBoolean("portraitOrientation", portraitOrientation);
         editor.putBoolean("explore", explore);
+        editor.putBoolean("forcedNF", forcedNF);
         editor.apply();
     }
 
@@ -30,5 +32,6 @@ public class Settings {
         soundEnabled = prefs.getBoolean("soundEnabled", soundEnabled);
         portraitOrientation = prefs.getBoolean("portraitOrientation", portraitOrientation);
         explore = prefs.getBoolean("explore", explore);
+        forcedNF = prefs.getBoolean("forcedNF", forcedNF);
     }
 }

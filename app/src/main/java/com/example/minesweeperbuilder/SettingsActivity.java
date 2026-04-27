@@ -20,7 +20,8 @@ public class SettingsActivity extends AppCompatActivity {
     Settings settings;
     View content;
     RadioGroup difficultyGroup, controlGroup;
-    CheckBox portraitOrientation;
+    CheckBox portraitOrientation, forcedNF;
+    RadioButton flagRadio, exploreRadio;
 
 
 
@@ -38,6 +39,8 @@ public class SettingsActivity extends AppCompatActivity {
         settings = new Settings();
         settings.load(this);
         loadTabContent(scrollContent, R.layout.settings_game);
+        flagRadio = content.findViewById(R.id.flag_radio);
+        exploreRadio = content.findViewById(R.id.explore_radio);
 
         currentlyChosenButton = gameButton;
 
@@ -128,6 +131,12 @@ public class SettingsActivity extends AppCompatActivity {
             updateControlRadio(controlGroup);
             setupControlListener(controlGroup);
         }
+
+        forcedNF = content.findViewById(R.id.forced_NF);
+        if (forcedNF != null) {
+            updateForcedNFCheckbox();
+            setupForcedNFListener(forcedNF);
+        }
     }
 
     private void updateDifficutlyRadio(RadioGroup radio) {
@@ -150,6 +159,10 @@ public class SettingsActivity extends AppCompatActivity {
         } else {
             radio.check(R.id.flag_radio);
         }
+    }
+
+    private void updateForcedNFCheckbox() {
+        forcedNF.setChecked(settings.forcedNF);
     }
 
     private void setupDifficultyListener(RadioGroup difficultyGroup) {
@@ -178,6 +191,22 @@ public class SettingsActivity extends AppCompatActivity {
                 settings.explore = false;
             } else {
                 settings.explore = true;
+            }
+            settings.save(this);
+        });
+    }
+
+    private void setupForcedNFListener(CheckBox cBox) {
+        cBox.setOnClickListener(view -> {
+            settings.forcedNF = !settings.forcedNF;
+            if (settings.forcedNF) {
+                settings.explore = true;
+                updateControlRadio(controlGroup);
+                flagRadio.setClickable(false);
+                exploreRadio.setClickable(false);
+            } else {
+                flagRadio.setClickable(true);
+                exploreRadio.setClickable(true);
             }
             settings.save(this);
         });

@@ -63,8 +63,10 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
             flagBorderUpdate();
         });
         flag.setOnClickListener(view -> {
-            game.toggleMode();
-            flagBorderUpdate();
+            if(!settings.forcedNF) {
+                game.toggleMode();
+                flagBorderUpdate();
+            }
         });
 
         flagsCount = findViewById(R.id.activity_main_flagsleft);
@@ -85,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
                     smiley.setBackground(drawable);
                     drawable.setBounds(0, 0, flag.getWidth(), flag.getHeight());
                     flag.setBackground(drawable);
-                    game = new MinesweeperGame(settings.difficulty.height, settings.difficulty.width, settings.difficulty.bombs);
+                    game = new MinesweeperGame((settings.portraitOrientation) ? largerCoordinate : smallerCoordinate, (settings.portraitOrientation) ? smallerCoordinate : largerCoordinate, settings.difficulty.bombs);
                     timerHandler.removeCallbacks(timerRunnable);
                     mineGridRecyclerAdapter.setCells(game.getMineGrid().getCells());
                     mineGridRecyclerAdapter.setGameOver(game.isGameOver());

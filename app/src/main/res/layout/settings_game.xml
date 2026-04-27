@@ -93,4 +93,10 @@
             android:id="@+id/explore_radio"/>
     </RadioGroup>
 
+    <CheckBox
+        android:id="@+id/forced_NF"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="Force Non-Flagging mode" />
+
 </LinearLayout>
