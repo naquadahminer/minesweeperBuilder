@@ -8,9 +8,9 @@ public class Cell {
     private boolean isRevealed;
     private boolean isFlagged;
 
-    public Cell(int value) {
+    public Cell(int value, boolean isBuildingMode) {
         this.value = value;
-        this.isRevealed = false;
+        this.isRevealed = isBuildingMode;
         this.isFlagged = false;
     }
 

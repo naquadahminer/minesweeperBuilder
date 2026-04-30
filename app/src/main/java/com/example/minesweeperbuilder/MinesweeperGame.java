@@ -17,7 +17,7 @@ public class MinesweeperGame {
 
 
     public MinesweeperGame(int height, int width, int numberOfBombs) {
-        this.mineGrid = new MineGrid(height, width);
+        this.mineGrid = new MineGrid(height, width, false);
         this.clearMode = true;
         this.flagMode = false;
         this.flagsPlaced = 0;

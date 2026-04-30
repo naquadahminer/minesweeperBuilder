@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
@@ -62,7 +61,7 @@ public class BuildingActivity extends AppCompatActivity {
 
         fieldSetupButton = findViewById(R.id.activity_building_field_setup);
         fieldSetupButton.setOnClickListener(view -> {
-                showFieldSetupDialog();
+            showBuildingFieldSetupDialog();
         });
     }
 
@@ -78,26 +77,10 @@ public class BuildingActivity extends AppCompatActivity {
         }
     }
 
-    private void showFieldSetupDialog() {
-        Dialog fieldSetupDialog = new Dialog(this);
-        fieldSetupDialog.setContentView(R.layout.field_setup_dialog);
-        fieldSetupDialog.show();
-
-        Window window = fieldSetupDialog.getWindow();
-        if (window != null) {
-            int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.8);
-            window.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
-        }
-
-        EditText width, height;
-        Button heightIncrement, widthIncrement, heightDecrement, widthDecrement, createButton;
-        width = findViewById(R.id.building_width_text_field);
-        height = findViewById(R.id.building_height_text_field);
-        heightIncrement = findViewById(R.id.building_height_increment_button);
-        heightDecrement = findViewById(R.id.building_height_decrement_button);
-        widthIncrement = findViewById(R.id.building_width_increment_button);
-        widthDecrement = findViewById(R.id.building_width_decrement_button);
-        createButton = findViewById(R.id.building_dialog_create_button);
-
+    private void showBuildingFieldSetupDialog() {
+        new BuildingFieldSetupDialog(this, () -> {
+            System.out.println("hello");
+        }).show();
     }
+
 }

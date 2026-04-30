@@ -234,7 +234,5 @@ public class SettingsActivity extends AppCompatActivity {
         new CustomFieldSetupDialog(this, () -> {
             difficultyGroup.check(R.id.settings_custom_radio);
         }).show();
-
-
     }
 }

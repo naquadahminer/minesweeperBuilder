@@ -10,13 +10,13 @@ public class MineGrid {
     private List<Cell> cells;
     private int height, width;
 
-    public MineGrid(int height, int width){
+    public MineGrid(int height, int width, boolean isBuildingMode){
         this.height = height;
         this.width = width;
         cells = new ArrayList<>();
 
         for (int i = 0; i < height*width; i++) {
-            cells.add(new Cell(Cell.BLANK));
+            cells.add(new Cell(Cell.BLANK, isBuildingMode));
         }
     }
 
@@ -28,7 +28,7 @@ public class MineGrid {
 
             int index = toIndex(x,y);
             if(cells.get(index).getValue() == Cell.BLANK && index != clickIndex){
-                cells.set(index, new Cell(Cell.BOMB));
+                cells.set(index, new Cell(Cell.BOMB, false));
                 bombsPlaced++;
             }
         }
@@ -44,7 +44,7 @@ public class MineGrid {
                         }
                     }
                     if (countBombs > 0) {
-                        cells.set(toIndex(x, y), new Cell(countBombs));
+                        cells.set(toIndex(x, y), new Cell(countBombs, false));
                     }
                 }
             }
