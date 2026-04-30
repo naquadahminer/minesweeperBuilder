@@ -6,7 +6,10 @@ import android.content.SharedPreferences;
 public class Settings {
     private static final String PREFS_NAME = "settings";
 
-    public Difficulty difficulty = Difficulty.BEGINNER;
+    public int width = 8;
+    public int height = 8;
+    public int bombCount = 10;
+    public String difficulty = "BEGINNER";
     public boolean soundEnabled = true;
     public boolean portraitOrientation = true;
     public boolean explore = true;
@@ -16,7 +19,10 @@ public class Settings {
         SharedPreferences.Editor editor = context
                 .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
                 .edit();
-        editor.putString("difficulty", difficulty.name());
+        editor.putString("difficulty", difficulty);
+        editor.putInt("height", height);
+        editor.putInt("width", width);
+        editor.putInt("bombCount", bombCount);
         editor.putBoolean("soundEnabled", soundEnabled);
         editor.putBoolean("portraitOrientation", portraitOrientation);
         editor.putBoolean("explore", explore);
@@ -27,8 +33,10 @@ public class Settings {
     public void load(Context context) {
         SharedPreferences prefs = context
                 .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        String savedName = prefs.getString("difficulty", Difficulty.BEGINNER.name());
-        difficulty = Difficulty.valueOf(savedName);
+        difficulty = prefs.getString("difficulty", difficulty);
+        height = prefs.getInt("height", height);
+        width = prefs.getInt("width", width);
+        bombCount = prefs.getInt("bombCount", bombCount);
         soundEnabled = prefs.getBoolean("soundEnabled", soundEnabled);
         portraitOrientation = prefs.getBoolean("portraitOrientation", portraitOrientation);
         explore = prefs.getBoolean("explore", explore);

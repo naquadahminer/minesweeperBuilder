@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -46,8 +47,8 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
 
         settings = new Settings();
         settings.load(this);
-        smallerCoordinate = Math.min(settings.difficulty.width, settings.difficulty.height);
-        largerCoordinate = Math.max(settings.difficulty.width, settings.difficulty.height);
+        smallerCoordinate = Math.min(settings.width, settings.height);
+        largerCoordinate = Math.max(settings.width, settings.height);
 
         timer = findViewById(R.id.activity_main_timer);
         smiley = findViewById(R.id.activity_main_smiley);
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
                     smiley.setBackground(drawable);
                     drawable.setBounds(0, 0, flag.getWidth(), flag.getHeight());
                     flag.setBackground(drawable);
-                    game = new MinesweeperGame((settings.portraitOrientation) ? largerCoordinate : smallerCoordinate, (settings.portraitOrientation) ? smallerCoordinate : largerCoordinate, settings.difficulty.bombs);
+                    game = new MinesweeperGame((settings.portraitOrientation) ? largerCoordinate : smallerCoordinate, (settings.portraitOrientation) ? smallerCoordinate : largerCoordinate, settings.bombCount);
                     timerHandler.removeCallbacks(timerRunnable);
                     mineGridRecyclerAdapter.setCells(game.getMineGrid().getCells());
                     mineGridRecyclerAdapter.setGameOver(game.isGameOver());
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
             }
         });
         gridRecyclerView.setNestedScrollingEnabled(false);
-        game = new MinesweeperGame((settings.portraitOrientation) ? largerCoordinate : smallerCoordinate, (settings.portraitOrientation) ? smallerCoordinate : largerCoordinate, settings.difficulty.bombs);
+        game = new MinesweeperGame((settings.portraitOrientation) ? largerCoordinate : smallerCoordinate, (settings.portraitOrientation) ? smallerCoordinate : largerCoordinate, settings.bombCount);
         mineGridRecyclerAdapter = new MineGridRecyclerAdapter(game.getMineGrid().getCells(), this);
         gridRecyclerView.setAdapter(mineGridRecyclerAdapter);
         flagsCount.setText(String.format("%03d", game.getNumberOfBombs() - game.getFlagCount()));
@@ -123,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
     public void onCellClick(Cell cell) {
         int cellIndex = game.getMineGrid().getCells().indexOf(cell);
         if (game.isFieldClosed()) {
-            game.getMineGrid().generateGrid(settings.difficulty.bombs, cellIndex);
+            game.getMineGrid().generateGrid(settings.bombCount, cellIndex);
             game.setFieldClosed(false);
         }
         game.handleCellClick(game.getMineGrid().getCells().get(cellIndex));

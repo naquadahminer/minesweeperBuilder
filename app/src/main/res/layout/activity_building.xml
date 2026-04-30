@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#c6c6c6"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".BuildingActivity">
+
+    <LinearLayout
+        android:id="@+id/activity_building_upper_panel_layout"
+        android:background="@drawable/border_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/activity_building_grid_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/activity_building_flagsleft"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/default_count"
+            android:textSize="64sp"
+            android:paddingStart="10dp"
+            android:paddingEnd="0dp"/>
+
+        <ImageView
+            android:id="@+id/activity_building_smiley"
+            android:contentDescription="@string/smiley"
+            android:src="@drawable/smiley"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"/>
+
+        <TextView
+            android:id="@+id/activity_building_timer"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/default_count"
+            android:textSize="64sp"
+            android:gravity="end"
+            android:paddingStart="0dp"
+            android:paddingEnd="10dp"/>
+
+    </LinearLayout>
+
+
+    <com.otaliastudios.zoom.ZoomLayout
+        android:id="@+id/activity_building_grid_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="vertical|horizontal"
+        app:alignment="center"
+        app:animationDuration="0"
+        app:flingEnabled="true"
+        app:hasClickableChildren="true"
+        app:horizontalPanEnabled="true"
+        app:layout_constraintBottom_toTopOf="@+id/activity_building_bottom_panel_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_building_upper_panel_layout"
+        app:maxZoom="2.5"
+        app:maxZoomType="zoom"
+        app:minZoom="0.3"
+        app:minZoomType="zoom"
+        app:oneFingerScrollEnabled="false"
+        app:overPinchable="true"
+        app:overScrollHorizontal="false"
+        app:overScrollVertical="false"
+        app:scrollEnabled="true"
+        app:threeFingersScrollEnabled="true"
+        app:transformation="centerInside"
+        app:transformationGravity="auto"
+        app:twoFingersScrollEnabled="true"
+        app:verticalPanEnabled="true"
+        app:zoomEnabled="true">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activity_building_grid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </com.otaliastudios.zoom.ZoomLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/activity_building_bottom_panel_layout"
+        android:background="@drawable/border_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/activity_building_flag"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:contentDescription="@string/flag"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp"
+            android:src="@drawable/flag"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <ImageView
+            android:id="@+id/activity_building_field_setup"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp"
+            android:src="@drawable/clicked_smiley"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <ImageView
+            android:id="@+id/activity_building_mode_change"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp"
+            android:src="@drawable/clicked_smiley"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteY="0dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,6 +24,12 @@ public class MenuActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        Button buildingButton = findViewById(R.id.menu_button_building);
+        buildingButton.setOnClickListener(view -> {
+            Intent intent = new Intent(MenuActivity.this, BuildingActivity.class);
+            startActivity(intent);
+        });
+
         Button settingsButton = findViewById(R.id.menu_button_settings);
         settingsButton.setOnClickListener(view -> {
             Intent intent = new Intent(MenuActivity.this, SettingsActivity.class);

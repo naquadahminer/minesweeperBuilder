@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Field height"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_without_corners"
+            android:padding="7dp"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="-"
+            android:id="@+id/custom_height_decrement_button"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="10"
+            android:inputType="number"
+            android:maxLength="2"
+            android:textAlignment="center"
+            android:id="@+id/custom_height_text_field"/>
+
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_without_corners"
+            android:padding="7dp"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="+"
+            android:id="@+id/custom_height_increment_button" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="6"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#777777"
+        android:layout_margin="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Field width"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_without_corners"
+            android:padding="7dp"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="-"
+            android:id="@+id/custom_width_decrement_button"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="10"
+            android:inputType="number"
+            android:maxLength="2"
+            android:textAlignment="center"
+            android:id="@+id/custom_width_text_field"/>
+
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_without_corners"
+            android:padding="7dp"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="+"
+            android:id="@+id/custom_width_increment_button"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="6"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#777777"
+        android:layout_margin="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Number of mines"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_without_corners"
+            android:padding="7dp"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="-"
+            android:id="@+id/custom_bomb_decrement_button"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="10"
+            android:inputType="number"
+            android:maxLength="4"
+            android:textAlignment="center"
+            android:id="@+id/custom_bomb_text_field"/>
+
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_without_corners"
+            android:padding="7dp"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="+"
+            android:id="@+id/custom_bomb_increment_button" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="6"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#777777"
+        android:layout_margin="5dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No-Guess mode"
+            android:layout_weight="1"
+            android:id="@+id/custom_dialog_NG_checkbox"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_without_corners"
+            android:padding="10dp"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="Create"
+            android:id="@+id/custom_dialog_create_button"/>
+    </LinearLayout>
+</LinearLayout>

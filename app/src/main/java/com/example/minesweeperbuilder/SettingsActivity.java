@@ -1,9 +1,14 @@
 package com.example.minesweeperbuilder;
 
+import android.app.Dialog;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -13,6 +18,8 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
     TextView gameButton, profileButton, themesButton;
@@ -111,9 +118,6 @@ public class SettingsActivity extends AppCompatActivity {
         content = getLayoutInflater().inflate(layoutId, scrollContent, false);
         scrollContent.addView(content);
 
-        android.util.Log.d("Settings", "loading tab, difficulty = " + settings.difficulty);
-
-        // finding difficultyRadioGroup. if the correct tab was used it'll have value, and in that case we can update its contents as well as set a onClickListener
         difficultyGroup = content.findViewById(R.id.difficulty_group);
         if (difficultyGroup != null) {
             updateDifficutlyRadio(difficultyGroup);
@@ -140,12 +144,15 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void updateDifficutlyRadio(RadioGroup radio) {
-        if (settings.difficulty == Difficulty.BEGINNER) {
+        System.out.println(settings.difficulty);
+        if (Objects.equals(settings.difficulty, "BEGINNER")) {
             radio.check(R.id.settings_beginner_radio);
-        } else if (settings.difficulty == Difficulty.INTERMEDIATE) {
+        } else if (Objects.equals(settings.difficulty, "INTERMEDIATE")) {
             radio.check(R.id.settings_intermediate_radio);
-        } else if (settings.difficulty == Difficulty.EXPERT) {
+        } else if (Objects.equals(settings.difficulty, "EXPERT")) {
             radio.check(R.id.settings_expert_radio);
+        } else if (Objects.equals(settings.difficulty, "CUSTOM")) {
+            radio.check(R.id.settings_custom_radio);
         }
     }
 
@@ -168,11 +175,22 @@ public class SettingsActivity extends AppCompatActivity {
     private void setupDifficultyListener(RadioGroup difficultyGroup) {
         difficultyGroup.setOnCheckedChangeListener((g, checkedId) -> {
             if (checkedId == R.id.settings_beginner_radio) {
-                settings.difficulty = Difficulty.BEGINNER;
+                settings.difficulty = "BEGINNER";
+                settings.width = 8;
+                settings.height = 8;
+                settings.bombCount = 10;
             } else if (checkedId == R.id.settings_intermediate_radio) {
-                settings.difficulty = Difficulty.INTERMEDIATE;
+                settings.difficulty = "INTERMEDIATE";
+                settings.width = 16;
+                settings.height = 16;
+                settings.bombCount = 40;
             } else if (checkedId == R.id.settings_expert_radio) {
-                settings.difficulty = Difficulty.EXPERT;
+                settings.difficulty = "EXPERT";
+                settings.width = 16;
+                settings.height = 30;
+                settings.bombCount = 99;
+            } else if (checkedId == R.id.settings_custom_radio) {
+                showCustomFieldSetupDialog();
             }
             settings.save(this);
         });
@@ -210,5 +228,13 @@ public class SettingsActivity extends AppCompatActivity {
             }
             settings.save(this);
         });
+    }
+
+    private void showCustomFieldSetupDialog() {
+        new CustomFieldSetupDialog(this, () -> {
+            difficultyGroup.check(R.id.settings_custom_radio);
+        }).show();
+
+
     }
 }

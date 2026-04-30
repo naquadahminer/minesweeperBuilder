@@ -1,5 +1,7 @@
 package com.example.minesweeperbuilder;
 
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -18,7 +20,7 @@ public class MineGrid {
         }
     }
 
-    public void generateGrid(int numberBombs, int clickIndex){
+    public void generateGrid(int numberBombs, int clickIndex) {
         int bombsPlaced = 0;
         while(bombsPlaced < numberBombs){
             int x = new Random().nextInt(width);
