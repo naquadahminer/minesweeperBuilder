@@ -15,18 +15,26 @@ public class BuildingGame {
         int index = mineGrid.getCells().indexOf(cell);
         if (cell.getValue() != Cell.BOMB) {
             mineGrid.getCells().set(index, new Cell(Cell.BOMB, true));
-//            List<Cell> adjacentCells = adjacentCells(x, y);
-//            int countBombs = 0;
-//            for (Cell cell:adjacentCells){
-//                if (cell.getValue() == Cell.BOMB){
-//                    countBombs++;
-//                }
-//            }
-//            if (countBombs > 0) {
-//                cells.set(toIndex(x, y), new Cell(countBombs, false));
-//            }
         } else {
             mineGrid.getCells().set(index, new Cell(Cell.BLANK, true));
+        }
+        calculateAdjacentCells(index);
+    }
+
+    public MineGrid getMineGrid() {
+        return mineGrid;
+    }
+
+    private void calculateAdjacentCells(int index) {
+        int[] cellPos = mineGrid.toXY(index);
+        List<Cell> adjacentCells = mineGrid.adjacentCells(cellPos[0], cellPos[1]);
+        adjacentCells.add(mineGrid.getCells().get(index));
+        for (Cell adjCell:adjacentCells){
+            int[] adjCellPos = mineGrid.toXY(mineGrid.getCells().indexOf(adjCell));
+            int adjCellBombCount = mineGrid.countBombs(adjCellPos[0], adjCellPos[1]);
+            if (adjCell.getValue() != Cell.BOMB) {
+                mineGrid.getCells().set(mineGrid.getCells().indexOf(adjCell), new Cell(adjCellBombCount, true));
+            }
         }
     }
 }

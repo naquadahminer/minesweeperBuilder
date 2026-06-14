@@ -96,6 +96,7 @@ public class CustomFieldSetupDialog extends Dialog {
             int widthValue = Integer.parseInt(width.getText().toString());
             int heightValue = Integer.parseInt(height.getText().toString());
             int bombCountValue = Integer.parseInt(bombCount.getText().toString());
+            settings.load(getContext());
             settings.difficulty = "CUSTOM";
             settings.height = heightValue;
             settings.width = widthValue;

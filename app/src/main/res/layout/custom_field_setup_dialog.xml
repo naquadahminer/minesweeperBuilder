@@ -153,7 +153,7 @@
             android:layout_weight="1"
             android:text="10"
             android:inputType="number"
-            android:maxLength="4"
+            android:maxLength="3"
             android:textAlignment="center"
             android:id="@+id/custom_bomb_text_field"/>
 
