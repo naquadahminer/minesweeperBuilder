@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
@@ -44,6 +45,29 @@ public class BuildingActivity extends AppCompatActivity implements OnCellClickLi
             drawable.setBounds(0, 0, smiley.getWidth(), smiley.getHeight());
             smiley.setBackground(drawable);
             smiley.setPadding(padding, padding, padding, padding);
+        });
+
+        smiley.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    CellReverseDrawable smileyClickedDrawable = new CellReverseDrawable();
+                    smileyClickedDrawable.setBounds(0, 0, smiley.getWidth(), smiley.getHeight());
+                    smiley.setBackground(smileyClickedDrawable);
+                    smiley.setImageResource(R.drawable.clicked_smiley);
+                    smiley.setPadding(padding, padding, padding, padding);
+                    break;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    CellDrawable drawable = new CellDrawable();
+                    drawable.setBounds(0, 0, smiley.getWidth(), smiley.getHeight());
+                    smiley.setBackground(drawable);
+                    game = new BuildingGame((settings.portraitOrientation) ? largerCoordinate : smallerCoordinate, (settings.portraitOrientation) ? smallerCoordinate : largerCoordinate);
+                    mineGridRecyclerAdapter.setCells(game.getMineGrid().getCells());
+                    smiley.setImageResource(R.drawable.smiley);
+                    smiley.setPadding(padding, padding, padding, padding);
+                    break;
+            }
+            return true;
         });
 
         gridRecyclerView = findViewById(R.id.activity_building_grid);
