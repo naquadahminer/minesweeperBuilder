@@ -21,6 +21,7 @@ public class MenuActivity extends AppCompatActivity {
         Button gameButton = findViewById(R.id.menu_button_game);
         gameButton.setOnClickListener(view -> {
             Intent intent = new Intent(MenuActivity.this, MainActivity.class);
+            intent.putExtra("isPrebuildField", false);
             startActivity(intent);
         });
 

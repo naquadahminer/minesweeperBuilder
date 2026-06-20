@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Locale;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements OnCellClickListener{
     RecyclerView gridRecyclerView;
@@ -21,7 +22,9 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
     ImageView smiley, flag;
     TextView flagsCount, timer;
     boolean timerStarted = false;
+    boolean isPrebuildField;
     int padding = 30;
+    int bombCount;
     int smallerCoordinate, largerCoordinate;
     Settings settings;
 
@@ -45,10 +48,17 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        isPrebuildField = getIntent().getBooleanExtra("isPrebuildField", false);
         settings = new Settings();
         settings.load(this);
-        smallerCoordinate = Math.min(settings.width, settings.height);
-        largerCoordinate = Math.max(settings.width, settings.height);
+        calculateCoordinates();
+
+        if (isPrebuildField) {
+            bombCount = getIntent().getIntExtra("numberOfBombs", 10);
+            System.out.println(bombCount);
+        } else {
+            bombCount = settings.bombCount;
+        }
 
         timer = findViewById(R.id.activity_main_timer);
         smiley = findViewById(R.id.activity_main_smiley);
@@ -88,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
                     smiley.setBackground(drawable);
                     drawable.setBounds(0, 0, flag.getWidth(), flag.getHeight());
                     flag.setBackground(drawable);
-                    game = new MinesweeperGame((settings.portraitOrientation) ? largerCoordinate : smallerCoordinate, (settings.portraitOrientation) ? smallerCoordinate : largerCoordinate, settings.bombCount);
+                    game = new MinesweeperGame((settings.portraitOrientation) ? largerCoordinate : smallerCoordinate, (settings.portraitOrientation) ? smallerCoordinate : largerCoordinate, bombCount);
                     timerHandler.removeCallbacks(timerRunnable);
                     mineGridRecyclerAdapter.setCells(game.getMineGrid().getCells());
                     mineGridRecyclerAdapter.setGameOver(game.isGameOver());
@@ -112,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
             }
         });
         gridRecyclerView.setNestedScrollingEnabled(false);
-        game = new MinesweeperGame((settings.portraitOrientation) ? largerCoordinate : smallerCoordinate, (settings.portraitOrientation) ? smallerCoordinate : largerCoordinate, settings.bombCount);
+        game = new MinesweeperGame((settings.portraitOrientation) ? largerCoordinate : smallerCoordinate, (settings.portraitOrientation) ? smallerCoordinate : largerCoordinate, bombCount);
         mineGridRecyclerAdapter = new MineGridRecyclerAdapter(game.getMineGrid().getCells(), this);
         gridRecyclerView.setAdapter(mineGridRecyclerAdapter);
         flagsCount.setText(String.format("%03d", game.getNumberOfBombs() - game.getFlagCount()));
@@ -124,7 +134,11 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
     public void onCellClick(Cell cell) {
         int cellIndex = game.getMineGrid().getCells().indexOf(cell);
         if (game.isFieldClosed()) {
-            game.getMineGrid().generateGrid(settings.bombCount, cellIndex);
+            if (isPrebuildField) {
+                game.getMineGrid().setMineGrid(Objects.requireNonNull(getIntent().getIntArrayExtra("simplifiedField")));
+            } else {
+                game.getMineGrid().generateGrid(settings.bombCount, cellIndex);
+            }
             game.setFieldClosed(false);
         }
         game.handleCellClick(game.getMineGrid().getCells().get(cellIndex));
@@ -163,6 +177,17 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
             CellDrawable drawable = new CellDrawable();
             drawable.setBounds(0, 0, flag.getWidth(), flag.getHeight());
             flag.setBackground(drawable);
+        }
+    }
+
+    private void calculateCoordinates() {
+        settings.load(this);
+        if (isPrebuildField) {
+            smallerCoordinate = Math.min(settings.buildingWidth, settings.buildingHeight);
+            largerCoordinate = Math.max(settings.buildingWidth, settings.buildingHeight);
+        } else {
+            smallerCoordinate = Math.min(settings.width, settings.height);
+            largerCoordinate = Math.max(settings.width, settings.height);
         }
     }
 }

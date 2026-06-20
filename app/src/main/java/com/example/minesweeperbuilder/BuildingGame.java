@@ -43,4 +43,16 @@ public class BuildingGame {
     public int getNumberOfBombs() {
         return numberOfBombs;
     }
+
+    public int[] getSimplifiedGrid() {
+        int[] simplifiedField = new int[mineGrid.getCells().size()];
+        for (Cell cell: mineGrid.getCells()) {
+            if (cell.getValue() != Cell.BOMB) {
+                simplifiedField[mineGrid.getCells().indexOf(cell)] = 0;
+            } else {
+                simplifiedField[mineGrid.getCells().indexOf(cell)] = -1;
+            }
+        }
+        return simplifiedField;
+    }
 }

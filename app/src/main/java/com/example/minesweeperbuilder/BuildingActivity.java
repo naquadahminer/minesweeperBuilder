@@ -2,6 +2,7 @@ package com.example.minesweeperbuilder;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
@@ -22,7 +23,7 @@ public class BuildingActivity extends AppCompatActivity implements OnCellClickLi
     RecyclerView gridRecyclerView;
     MineGridRecyclerAdapter mineGridRecyclerAdapter;
     BuildingGame game;
-    ImageView smiley, flag, fieldSetupButton;
+    ImageView smiley, flag, fieldSetupButton, testFieldButton;
     TextView flagsCount, timer;
     boolean timerStarted = false;
     int padding = 30;
@@ -89,6 +90,15 @@ public class BuildingActivity extends AppCompatActivity implements OnCellClickLi
         fieldSetupButton = findViewById(R.id.activity_building_field_setup);
         fieldSetupButton.setOnClickListener(view -> {
             showBuildingFieldSetupDialog();
+        });
+
+        testFieldButton = findViewById(R.id.activity_building_mode_change);
+        testFieldButton.setOnClickListener(view -> {
+            Intent intent = new Intent(BuildingActivity.this, MainActivity.class);
+            intent.putExtra("isPrebuildField", true);
+            intent.putExtra("numberOfBombs", game.getNumberOfBombs());
+            intent.putExtra("simplifiedField", game.getSimplifiedGrid());
+            startActivity(intent);
         });
     }
 

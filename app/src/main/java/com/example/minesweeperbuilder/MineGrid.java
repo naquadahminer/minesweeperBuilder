@@ -33,22 +33,7 @@ public class MineGrid {
             }
         }
 
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                if (cellAt(x, y).getValue() != Cell.BOMB){
-                    List<Cell> adjacentCells = adjacentCells(x, y);
-                    int countBombs = 0;
-                    for (Cell cell:adjacentCells){
-                        if (cell.getValue() == Cell.BOMB){
-                            countBombs++;
-                        }
-                    }
-                    if (countBombs > 0) {
-                        cells.set(toIndex(x, y), new Cell(countBombs, false));
-                    }
-                }
-            }
-        }
+        calculateAllNumbers();
     }
 
     public List<Cell> adjacentCells(int x, int y){
@@ -133,5 +118,27 @@ public class MineGrid {
 
     public List<Cell> getCells() {
         return cells;
+    }
+
+    private void calculateAllNumbers() {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (cellAt(x, y).getValue() != Cell.BOMB){
+                    int countBombs = countBombs(x, y);
+                    if (countBombs > 0) {
+                        cells.set(toIndex(x, y), new Cell(countBombs, false));
+                    }
+                }
+            }
+        }
+    }
+
+    public void setMineGrid(int[] simplifiedField) {
+        for (int i = 0; i < simplifiedField.length; i++) {
+            if (simplifiedField[i] == -1) {
+                cells.set(i, new Cell(Cell.BOMB, false));
+            }
+        }
+        calculateAllNumbers();
     }
 }
