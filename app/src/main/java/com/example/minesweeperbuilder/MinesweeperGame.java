@@ -109,10 +109,12 @@ public class MinesweeperGame {
         if (cell.getValue() == mineGrid.adjacentFlagged(cellPos[0], cellPos[1]).size()) {
             for(Cell adjacentCell: adjacentCells) {
                 if (!adjacentCell.isFlagged() && !adjacentCell.isRevealed()) {
-                    if (adjacentCell.getValue() != Cell.BLANK) {
+                    if (adjacentCell.getValue() != Cell.BLANK && adjacentCell.getValue() != Cell.BOMB) {
                         adjacentCell.setRevealed(true);
-                    } else {
+                    } else if (adjacentCell.getValue() == Cell.BLANK) {
                         clear(adjacentCell);
+                    } else if (adjacentCell.getValue() == Cell.BOMB) {
+                        isGameOver = true;
                     }
                 }
             }

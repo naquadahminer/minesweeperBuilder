@@ -34,6 +34,7 @@ public class CustomFieldSetupDialog extends Dialog {
         setContentView(R.layout.custom_field_setup_dialog);
 
         settings = new Settings();
+        settings.load(getContext());
         width = findViewById(R.id.custom_width_text_field);
         height = findViewById(R.id.custom_height_text_field);
         bombCount = findViewById(R.id.custom_bomb_text_field);
@@ -53,6 +54,8 @@ public class CustomFieldSetupDialog extends Dialog {
             height.setText(String.valueOf(currentHeight));
         });
 
+        height.setText(String.valueOf(settings.height));
+
         heightIncrement.setOnClickListener(view -> {
             int currentHeight = Integer.parseInt(height.getText().toString());
             currentHeight++;
@@ -66,6 +69,8 @@ public class CustomFieldSetupDialog extends Dialog {
             if (currentWidth < 8) currentWidth = 8;
             width.setText(String.valueOf(currentWidth));
         });
+
+        width.setText(String.valueOf(settings.width));
 
         widthIncrement.setOnClickListener(view -> {
             int currentWidth = Integer.parseInt(width.getText().toString());
@@ -82,6 +87,8 @@ public class CustomFieldSetupDialog extends Dialog {
             if (currentBombCount < 1) currentBombCount = 1;
             bombCount.setText(String.valueOf(currentBombCount));
         });
+
+        bombCount.setText(String.valueOf(settings.bombCount));
 
         bombCountIncrement.setOnClickListener(view -> {
             int currentWidth = Integer.parseInt(width.getText().toString());

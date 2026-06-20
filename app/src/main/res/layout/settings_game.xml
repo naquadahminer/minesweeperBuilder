@@ -12,7 +12,8 @@
         android:background="#dddddd"
         android:gravity="center_vertical"
         android:paddingStart="15dp"
-        android:text="Difficulty" />
+        android:text="Difficulty"
+        android:textColor="@color/black"/>
 
     <View
         android:layout_width="match_parent"
