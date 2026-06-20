@@ -47,6 +47,8 @@ public class BuildingActivity extends AppCompatActivity implements OnCellClickLi
             smiley.setPadding(padding, padding, padding, padding);
         });
 
+        flagsCount = findViewById(R.id.activity_building_flagsleft);
+
         smiley.setOnTouchListener((v, event) -> {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
@@ -62,6 +64,7 @@ public class BuildingActivity extends AppCompatActivity implements OnCellClickLi
                     drawable.setBounds(0, 0, smiley.getWidth(), smiley.getHeight());
                     smiley.setBackground(drawable);
                     game = new BuildingGame((settings.portraitOrientation) ? largerCoordinate : smallerCoordinate, (settings.portraitOrientation) ? smallerCoordinate : largerCoordinate);
+                    flagsCount.setText(String.format(Locale.getDefault(), "%03d", game.getNumberOfBombs()));
                     mineGridRecyclerAdapter.setCells(game.getMineGrid().getCells());
                     smiley.setImageResource(R.drawable.smiley);
                     smiley.setPadding(padding, padding, padding, padding);
@@ -81,7 +84,7 @@ public class BuildingActivity extends AppCompatActivity implements OnCellClickLi
         game = new BuildingGame((settings.portraitOrientation) ? largerCoordinate : smallerCoordinate, (settings.portraitOrientation) ? smallerCoordinate : largerCoordinate);
         mineGridRecyclerAdapter = new MineGridRecyclerAdapter(game.getMineGrid().getCells(), this);
         gridRecyclerView.setAdapter(mineGridRecyclerAdapter);
-        flagsCount.setText("000");
+        flagsCount.setText(String.format(Locale.getDefault(), "%03d", game.getNumberOfBombs()));
 
         fieldSetupButton = findViewById(R.id.activity_building_field_setup);
         fieldSetupButton.setOnClickListener(view -> {
@@ -107,6 +110,7 @@ public class BuildingActivity extends AppCompatActivity implements OnCellClickLi
     public void onCellClick(Cell cell) {
         game.handleCellClick(cell);
         mineGridRecyclerAdapter.setCells(game.getMineGrid().getCells());
+        flagsCount.setText(String.format(Locale.getDefault(), "%03d", game.getNumberOfBombs()));
     }
 
     private void calculateCoordinates() {

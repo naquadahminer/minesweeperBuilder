@@ -15,8 +15,10 @@ public class BuildingGame {
         int index = mineGrid.getCells().indexOf(cell);
         if (cell.getValue() != Cell.BOMB) {
             mineGrid.getCells().set(index, new Cell(Cell.BOMB, true));
+            numberOfBombs += 1;
         } else {
             mineGrid.getCells().set(index, new Cell(Cell.BLANK, true));
+            numberOfBombs -= 1;
         }
         calculateAdjacentCells(index);
     }
@@ -36,5 +38,9 @@ public class BuildingGame {
                 mineGrid.getCells().set(mineGrid.getCells().indexOf(adjCell), new Cell(adjCellBombCount, true));
             }
         }
+    }
+
+    public int getNumberOfBombs() {
+        return numberOfBombs;
     }
 }
