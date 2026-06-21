@@ -145,6 +145,9 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
         startTimer();
         flagsCount.setText(String.format(Locale.getDefault(), "%03d", game.getNumberOfBombs() - game.getFlagCount()));
 
+        CellDrawable drawable = new CellDrawable();
+        drawable.setBounds(0, 0, smiley.getWidth(), smiley.getHeight());
+        smiley.setBackground(drawable);
         if (game.isGameOver()) {
             mineGridRecyclerAdapter.setGameOver(game.isGameOver());
             game.getMineGrid().revealAllBombs();
