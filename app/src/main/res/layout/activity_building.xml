@@ -140,6 +140,20 @@
             tools:layout_editor_absoluteY="0dp" />
 
         <ImageView
+            android:id="@+id/activity_building_library_field_list"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp"
+            android:src="@drawable/clicked_smiley"
+            app:layout_constraintEnd_toStartOf="@+id/activity_building_mode_change"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <ImageView
             android:id="@+id/activity_building_mode_change"
             android:layout_width="56dp"
             android:layout_height="56dp"

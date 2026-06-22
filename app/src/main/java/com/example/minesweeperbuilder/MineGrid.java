@@ -99,6 +99,12 @@ public class MineGrid {
         }
     }
 
+    public void revealAllCells() {
+        for (Cell cell: cells) {
+            cell.setRevealed(true);
+        }
+    }
+
     public int toIndex(int x, int y) {
         return x + (y*width);
     }

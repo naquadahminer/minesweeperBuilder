@@ -5,23 +5,20 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MinesweeperGame {
-    private MineGrid mineGrid;
+public class MinesweeperGame extends Game{
     private boolean clearMode;
     private boolean flagMode;
     private boolean isGameOver;
     private boolean fieldClosed;
     private int flagsPlaced;
-    private int numberOfBombs;
     private int elapsedSeconds;
 
 
     public MinesweeperGame(int height, int width, int numberOfBombs) {
-        this.mineGrid = new MineGrid(height, width, false);
+        super(height, width, numberOfBombs, false);
         this.clearMode = true;
         this.flagMode = false;
         this.flagsPlaced = 0;
-        this.numberOfBombs = numberOfBombs;
         this.isGameOver = false;
         this.fieldClosed = true;
         this.elapsedSeconds = 0;
@@ -33,10 +30,6 @@ public class MinesweeperGame {
 
     public void incrementSeconds() {
         elapsedSeconds++;
-    }
-
-    public int getNumberOfBombs() {
-        return numberOfBombs;
     }
 
     public int getFlagCount() {
@@ -72,7 +65,7 @@ public class MinesweeperGame {
 
             toCheckAdjacents.add(cell);
 
-            while (toCheckAdjacents.size() > 0) {
+            while (!toCheckAdjacents.isEmpty()) {
                 Cell c = toCheckAdjacents.get(0);
                 int cellIndex = getMineGrid().getCells().indexOf(c);
                 int[] cellPos = getMineGrid().toXY(cellIndex);
@@ -162,10 +155,6 @@ public class MinesweeperGame {
             }
             flagsPlaced = count;
         }
-    }
-
-    public MineGrid getMineGrid() {
-        return mineGrid;
     }
 
     public boolean isGameOver() {

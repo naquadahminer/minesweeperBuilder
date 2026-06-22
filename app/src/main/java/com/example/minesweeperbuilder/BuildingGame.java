@@ -2,13 +2,10 @@ package com.example.minesweeperbuilder;
 
 import java.util.List;
 
-public class BuildingGame {
-    private MineGrid mineGrid;
-    private int numberOfBombs;
+public class BuildingGame extends Game {
 
-    public BuildingGame(int height, int width) {
-        this.mineGrid = new MineGrid(height, width, true);
-        this.numberOfBombs = 0;
+    public BuildingGame(int height, int width, int numberOfBombs) {
+        super(height, width, numberOfBombs, true);
     }
 
     public void handleCellClick(Cell cell){
@@ -23,10 +20,6 @@ public class BuildingGame {
         calculateAdjacentCells(index);
     }
 
-    public MineGrid getMineGrid() {
-        return mineGrid;
-    }
-
     private void calculateAdjacentCells(int index) {
         int[] cellPos = mineGrid.toXY(index);
         List<Cell> adjacentCells = mineGrid.adjacentCells(cellPos[0], cellPos[1]);
@@ -38,21 +31,5 @@ public class BuildingGame {
                 mineGrid.getCells().set(mineGrid.getCells().indexOf(adjCell), new Cell(adjCellBombCount, true));
             }
         }
-    }
-
-    public int getNumberOfBombs() {
-        return numberOfBombs;
-    }
-
-    public int[] getSimplifiedGrid() {
-        int[] simplifiedField = new int[mineGrid.getCells().size()];
-        for (Cell cell: mineGrid.getCells()) {
-            if (cell.getValue() != Cell.BOMB) {
-                simplifiedField[mineGrid.getCells().indexOf(cell)] = 0;
-            } else {
-                simplifiedField[mineGrid.getCells().indexOf(cell)] = -1;
-            }
-        }
-        return simplifiedField;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.minesweeperbuilder;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,11 +24,26 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
     ImageView smiley, flag;
     TextView flagsCount, timer;
     boolean timerStarted = false;
-    boolean isPrebuildField;
+    boolean isPrebuiltField;
     int padding = 30;
     int bombCount;
-    int smallerCoordinate, largerCoordinate;
+    int width, height;
     Settings settings;
+    private OnBackPressedCallback callback = new OnBackPressedCallback(false) {
+        @Override
+        public void handleOnBackPressed() {
+            if (isPrebuiltField) {
+                Intent intent = new Intent(MainActivity.this, BuildingActivity.class);
+                intent.putExtra("loadingPrebuiltField", true);
+                intent.putExtra("numberOfBombs", game.getNumberOfBombs());
+                intent.putExtra("simplifiedField", game.getSimplifiedGrid());
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                startActivity(intent);
+            }
+        }
+    };
 
     // timer and it's displaying
     Handler timerHandler = new Handler();
@@ -45,15 +62,17 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
     @SuppressLint({"DefaultLocale", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getOnBackPressedDispatcher().addCallback(this, callback);
+        callback.setEnabled(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        isPrebuildField = getIntent().getBooleanExtra("isPrebuildField", false);
+        isPrebuiltField = getIntent().getBooleanExtra("isPrebuiltField", false);
         settings = new Settings();
         settings.load(this);
-        calculateCoordinates();
+        calculateDimensions();
 
-        if (isPrebuildField) {
+        if (isPrebuiltField) {
             bombCount = getIntent().getIntExtra("numberOfBombs", 10);
             System.out.println(bombCount);
         } else {
@@ -98,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
                     smiley.setBackground(drawable);
                     drawable.setBounds(0, 0, flag.getWidth(), flag.getHeight());
                     flag.setBackground(drawable);
-                    game = new MinesweeperGame((settings.portraitOrientation) ? largerCoordinate : smallerCoordinate, (settings.portraitOrientation) ? smallerCoordinate : largerCoordinate, bombCount);
+                    game = new MinesweeperGame(height, width, bombCount);
                     timerHandler.removeCallbacks(timerRunnable);
                     mineGridRecyclerAdapter.setCells(game.getMineGrid().getCells());
                     mineGridRecyclerAdapter.setGameOver(game.isGameOver());
@@ -115,14 +134,14 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
 
         // generating minegrid. depending on the orientation it'll use the lower or higher value of height and width for the field displaying width
         gridRecyclerView = findViewById(R.id.activity_main_grid);
-        gridRecyclerView.setLayoutManager(new GridLayoutManager(this, (settings.portraitOrientation) ? smallerCoordinate : largerCoordinate) {
+        gridRecyclerView.setLayoutManager(new GridLayoutManager(this, width) {
             @Override
             public boolean canScrollVertically() {
                 return false;
             }
         });
         gridRecyclerView.setNestedScrollingEnabled(false);
-        game = new MinesweeperGame((settings.portraitOrientation) ? largerCoordinate : smallerCoordinate, (settings.portraitOrientation) ? smallerCoordinate : largerCoordinate, bombCount);
+        game = new MinesweeperGame(height, width, bombCount);
         mineGridRecyclerAdapter = new MineGridRecyclerAdapter(game.getMineGrid().getCells(), this);
         gridRecyclerView.setAdapter(mineGridRecyclerAdapter);
         flagsCount.setText(String.format("%03d", game.getNumberOfBombs() - game.getFlagCount()));
@@ -134,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
     public void onCellClick(Cell cell) {
         int cellIndex = game.getMineGrid().getCells().indexOf(cell);
         if (game.isFieldClosed()) {
-            if (isPrebuildField) {
+            if (isPrebuiltField) {
                 game.getMineGrid().setMineGrid(Objects.requireNonNull(getIntent().getIntArrayExtra("simplifiedField")));
             } else {
                 game.getMineGrid().generateGrid(settings.bombCount, cellIndex);
@@ -183,14 +202,14 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
         }
     }
 
-    private void calculateCoordinates() {
+    private void calculateDimensions() {
         settings.load(this);
-        if (isPrebuildField) {
-            smallerCoordinate = Math.min(settings.buildingWidth, settings.buildingHeight);
-            largerCoordinate = Math.max(settings.buildingWidth, settings.buildingHeight);
+        if (settings.portraitOrientation) {
+            width = Math.min(settings.buildingWidth, settings.buildingHeight);
+            height = Math.max(settings.buildingWidth, settings.buildingHeight);
         } else {
-            smallerCoordinate = Math.min(settings.width, settings.height);
-            largerCoordinate = Math.max(settings.width, settings.height);
+            width = Math.max(settings.buildingWidth, settings.buildingHeight);
+            height = Math.min(settings.buildingWidth, settings.buildingHeight);
         }
     }
 }
