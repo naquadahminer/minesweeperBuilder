@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Minesweeper Bilder</string>
+    <string name="app_name">Minesweeper Builder</string>
 
     <string name="smiley">smiley face</string>
     <string name="flag">flag</string>

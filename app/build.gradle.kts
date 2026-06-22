@@ -11,7 +11,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.minesweeperbilder"
+        applicationId = "com.example.minesweeperbuilder"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

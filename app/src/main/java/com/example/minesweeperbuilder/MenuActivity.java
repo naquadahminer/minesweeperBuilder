@@ -40,6 +40,12 @@ public class MenuActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        Button libraryButton = findViewById(R.id.menu_button_library);
+        libraryButton.setOnClickListener(view -> {
+            Intent intent = new Intent(MenuActivity.this, LibraryActivity.class);
+            startActivity(intent);
+        });
+
         Button settingsButton = findViewById(R.id.menu_button_settings);
         settingsButton.setOnClickListener(view -> {
             Intent intent = new Intent(MenuActivity.this, SettingsActivity.class);
