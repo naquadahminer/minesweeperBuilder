@@ -25,7 +25,7 @@ public class BuildingActivity extends AppCompatActivity implements OnCellClickLi
     RecyclerView gridRecyclerView;
     MineGridRecyclerAdapter mineGridRecyclerAdapter;
     BuildingGame game;
-    ImageView smiley, flag, fieldSetupButton, testFieldButton;
+    ImageView smiley, flag, fieldSetupButton, testFieldButton, saveFieldButton, savedFieldListButton;
     TextView flagsCount;
     boolean loadingPrebuiltField;
     int padding = 30;
@@ -110,6 +110,16 @@ public class BuildingActivity extends AppCompatActivity implements OnCellClickLi
             showBuildingFieldSetupDialog();
         });
 
+        savedFieldListButton = findViewById(R.id.activity_building_library_field_list);
+        savedFieldListButton.setOnClickListener(view -> {
+            showBuildingFieldSetupDialog();
+        });
+
+        saveFieldButton = findViewById(R.id.activity_building_save_library_field);
+        saveFieldButton.setOnClickListener(view -> {
+            showSavingFieldDialog();
+        });
+
         testFieldButton = findViewById(R.id.activity_building_mode_change);
         testFieldButton.setOnClickListener(view -> {
             Intent intent = new Intent(BuildingActivity.this, MainActivity.class);
@@ -132,6 +142,17 @@ public class BuildingActivity extends AppCompatActivity implements OnCellClickLi
             game = new BuildingGame(height, width, numberOfBombs);
             mineGridRecyclerAdapter.setCells(game.getMineGrid().getCells());
         }).show();
+    }
+    private void showSavingFieldDialog() {
+        new BuildingSavingFieldDialog(this, () -> {
+            calculateDimensions();
+            gridRecyclerView.setLayoutManager(new GridLayoutManager(this, width) {
+                @Override
+                public boolean canScrollVertically() {
+                    return false;
+                }
+            });
+        }, width, height, settings.portraitOrientation, game.getSimplifiedGrid()).show();
     }
 
     @Override
