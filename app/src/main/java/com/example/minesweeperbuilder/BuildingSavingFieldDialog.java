@@ -3,6 +3,7 @@ package com.example.minesweeperbuilder;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
@@ -18,7 +19,7 @@ public class BuildingSavingFieldDialog extends Dialog {
     SavedFieldsList savedFields = new SavedFieldsList();
     String fieldName;
     OnFieldConfirmedListener listener;
-    int width, height;
+    int width, height, bombCount;
     boolean portraitMode;
     int[] simplifiedField;
 
@@ -26,11 +27,12 @@ public class BuildingSavingFieldDialog extends Dialog {
         void onFieldConfirmed();
     }
 
-    public BuildingSavingFieldDialog(@NonNull Context context, OnFieldConfirmedListener listener, int width, int height, boolean portraitMode, int[] simplifiedField) {
+    public BuildingSavingFieldDialog(@NonNull Context context, OnFieldConfirmedListener listener, int width, int height, int bombCount, boolean portraitMode, int[] simplifiedField) {
         super(context);
         this.listener = listener;
         this.width = width;
         this.height = height;
+        this.bombCount = bombCount;
         this.portraitMode = portraitMode;
         this.simplifiedField = simplifiedField;
     }
@@ -56,8 +58,9 @@ public class BuildingSavingFieldDialog extends Dialog {
             } else if (fieldName.length() >= 11) {
                 warning.setText("Field name is too long");
             } else {
-                SavedField field = new SavedField(fieldName, width, height, portraitMode, simplifiedField);
+                SavedField field = new SavedField(fieldName, width, height, bombCount, portraitMode, simplifiedField);
                 savedFields.addField(getContext(), field);
+                savedFields.save(getContext());
 
                 listener.onFieldConfirmed();
                 dismiss();

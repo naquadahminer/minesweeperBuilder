@@ -23,10 +23,6 @@ public class MineGridRecyclerAdapter extends RecyclerView.Adapter<MineGridRecycl
         this.isGameOver = false;
     }
 
-    public boolean isGameOver() {
-        return isGameOver;
-    }
-
     public void setGameOver(boolean isGameOver) {
         this.isGameOver = isGameOver;
     }

@@ -7,14 +7,16 @@ public class SavedField {
     String id;
     public int width;
     public int height;
+    public int bombCount;
     public boolean portraitMode;
     public int[] bombPositions;
 
-    public SavedField(String name, int width, int height, boolean portraitMode, int[] bombPositions) {
+    public SavedField(String name, int width, int height, int bombCount, boolean portraitMode, int[] bombPositions) {
         this.name = name;
         this.id = UUID.randomUUID().toString();
         this.width = width;
         this.height = height;
+        this.bombCount = bombCount;
         this.portraitMode = portraitMode;
         this.bombPositions = bombPositions;
     }

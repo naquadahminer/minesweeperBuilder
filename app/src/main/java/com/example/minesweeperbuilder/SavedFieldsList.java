@@ -57,4 +57,8 @@ public class SavedFieldsList {
         }
         return false;
     }
+
+    public List<SavedField> getFields() {
+        return savedFields;
+    }
 }

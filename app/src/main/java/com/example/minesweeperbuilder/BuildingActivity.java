@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -152,7 +153,7 @@ public class BuildingActivity extends AppCompatActivity implements OnCellClickLi
                     return false;
                 }
             });
-        }, width, height, settings.portraitOrientation, game.getSimplifiedGrid()).show();
+        }, width, height, game.getNumberOfBombs(), settings.portraitOrientation, game.getSimplifiedGrid()).show();
     }
 
     @Override

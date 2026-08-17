@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
     ImageView smiley, flag;
     TextView flagsCount, timer;
     boolean timerStarted = false;
-    boolean isPrebuiltField;
+    boolean isPrebuiltField, isFromLibrary;
     int padding = 30;
     int bombCount;
     int width, height;
@@ -32,11 +34,14 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
     private OnBackPressedCallback callback = new OnBackPressedCallback(false) {
         @Override
         public void handleOnBackPressed() {
-            if (isPrebuiltField) {
+            if (isPrebuiltField && !isFromLibrary) {
                 Intent intent = new Intent(MainActivity.this, BuildingActivity.class);
                 intent.putExtra("loadingPrebuiltField", true);
                 intent.putExtra("numberOfBombs", game.getNumberOfBombs());
                 intent.putExtra("simplifiedField", game.getSimplifiedGrid());
+                startActivity(intent);
+            } else if (isPrebuiltField && isFromLibrary) {
+                Intent intent = new Intent(MainActivity.this, LibraryActivity.class);
                 startActivity(intent);
             } else {
                 Intent intent = new Intent(MainActivity.this, MenuActivity.class);
@@ -68,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
         setContentView(R.layout.activity_main);
 
         isPrebuiltField = getIntent().getBooleanExtra("isPrebuiltField", false);
+        isFromLibrary = getIntent().getBooleanExtra("isFromLibrary", false);
         settings = new Settings();
         settings.load(this);
         calculateDimensions();
