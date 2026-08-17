@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
     MinesweeperGame game;
     ImageView smiley, flag;
     TextView flagsCount, timer;
+    ImageView backButton;
     boolean timerStarted = false;
     boolean isPrebuiltField, isFromLibrary;
     int padding = 30;
@@ -103,6 +104,11 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
                 game.toggleMode();
                 flagBorderUpdate();
             }
+        });
+
+        backButton = findViewById(R.id.activity_main_back);
+        backButton.setOnClickListener(view -> {
+            callback.handleOnBackPressed();
         });
 
         flagsCount = findViewById(R.id.activity_main_flagsleft);

@@ -26,7 +26,7 @@ public class BuildingActivity extends AppCompatActivity implements OnCellClickLi
     RecyclerView gridRecyclerView;
     MineGridRecyclerAdapter mineGridRecyclerAdapter;
     BuildingGame game;
-    ImageView smiley, flag, fieldSetupButton, testFieldButton, saveFieldButton, savedFieldListButton;
+    ImageView smiley, flag, fieldSetupButton, testFieldButton, saveFieldButton, savedFieldListButton, backButton;
     TextView flagsCount;
     boolean loadingPrebuiltField;
     int padding = 30;
@@ -106,15 +106,20 @@ public class BuildingActivity extends AppCompatActivity implements OnCellClickLi
         gridRecyclerView.setAdapter(mineGridRecyclerAdapter);
         flagsCount.setText(String.format(Locale.getDefault(), "%03d", numberOfBombs));
 
+        backButton = findViewById(R.id.activity_building_back);
+        backButton.setOnClickListener(view -> {
+            callback.handleOnBackPressed();
+        });
+
         fieldSetupButton = findViewById(R.id.activity_building_field_setup);
         fieldSetupButton.setOnClickListener(view -> {
             showBuildingFieldSetupDialog();
         });
 
-        savedFieldListButton = findViewById(R.id.activity_building_library_field_list);
-        savedFieldListButton.setOnClickListener(view -> {
-            showBuildingFieldSetupDialog();
-        });
+//        savedFieldListButton = findViewById(R.id.activity_building_library_field_list);
+//        savedFieldListButton.setOnClickListener(view -> {
+//            showBuildingFieldSetupDialog();
+//        });
 
         saveFieldButton = findViewById(R.id.activity_building_save_library_field);
         saveFieldButton.setOnClickListener(view -> {

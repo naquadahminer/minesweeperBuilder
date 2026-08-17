@@ -125,6 +125,34 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteY="0dp" />
 
+        <!--        <ImageView-->
+<!--            android:id="@+id/activity_building_library_field_list"-->
+<!--            android:layout_width="56dp"-->
+<!--            android:layout_height="56dp"-->
+<!--            android:paddingStart="10dp"-->
+<!--            android:paddingTop="10dp"-->
+<!--            android:paddingEnd="10dp"-->
+<!--            android:paddingBottom="10dp"-->
+<!--            android:src="@drawable/clicked_smiley"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/activity_building_save_library_field"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            tools:layout_editor_absoluteY="0dp" />-->
+
+        <ImageView
+            android:id="@+id/activity_building_back"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp"
+            android:src="@drawable/arrow_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
         <ImageView
             android:id="@+id/activity_building_field_setup"
             android:layout_width="56dp"
@@ -133,25 +161,11 @@
             android:paddingTop="10dp"
             android:paddingEnd="10dp"
             android:paddingBottom="10dp"
-            android:src="@drawable/clicked_smiley"
-            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/gears"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/activity_building_back"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteY="0dp" />
-
-        <ImageView
-            android:id="@+id/activity_building_library_field_list"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:paddingStart="10dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="10dp"
-            android:paddingBottom="10dp"
-            android:src="@drawable/clicked_smiley"
-            app:layout_constraintEnd_toStartOf="@+id/activity_building_save_library_field"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteY="0dp" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
             android:id="@+id/activity_building_save_library_field"
@@ -161,7 +175,7 @@
             android:paddingTop="10dp"
             android:paddingEnd="10dp"
             android:paddingBottom="10dp"
-            android:src="@drawable/clicked_smiley"
+            android:src="@drawable/floppy_disc"
             app:layout_constraintEnd_toStartOf="@+id/activity_building_mode_change"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -175,7 +189,7 @@
             android:paddingTop="10dp"
             android:paddingEnd="10dp"
             android:paddingBottom="10dp"
-            android:src="@drawable/clicked_smiley"
+            android:src="@drawable/shovel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"

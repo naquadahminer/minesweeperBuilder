@@ -2,6 +2,7 @@ package com.example.minesweeperbuilder;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
@@ -13,6 +14,7 @@ public class LibraryActivity extends AppCompatActivity implements LibraryFieldsR
     SavedFieldsList savedFields = new SavedFieldsList();
     RecyclerView libraryRecyclerView;
     LibraryFieldsRecyclerAdapter adapter;
+    ImageView backButton;
 
     private OnBackPressedCallback callback = new OnBackPressedCallback(false) {
         @Override
@@ -36,6 +38,11 @@ public class LibraryActivity extends AppCompatActivity implements LibraryFieldsR
         libraryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new LibraryFieldsRecyclerAdapter(savedFields.getFields(), this);
         libraryRecyclerView.setAdapter(adapter);
+
+        backButton = findViewById(R.id.library_header_arrow);
+        backButton.setOnClickListener(view -> {
+            callback.handleOnBackPressed();
+        });
     }
 
     @Override

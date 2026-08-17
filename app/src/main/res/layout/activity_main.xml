@@ -99,34 +99,47 @@
 
     </com.otaliastudios.zoom.ZoomLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottomPanelLayout"
         android:background="@drawable/border_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:id="@+id/activity_main_flag"
-            android:contentDescription="@string/flag"
-            android:src="@drawable/flag"
+            android:id="@+id/activity_main_back"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:textSize="48sp"
-            android:paddingEnd="10dp"
-            android:paddingBottom="10dp"
             android:paddingStart="10dp"
             android:paddingTop="10dp"
-            android:layout_marginBottom="3dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp"
+            android:src="@drawable/arrow_back"
+            android:textSize="48sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/activity_main_flag"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:layout_marginTop="2dp"
+            android:contentDescription="@string/flag"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp"
+            android:src="@drawable/flag"
+            android:textSize="48sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    </LinearLayout>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
