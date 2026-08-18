@@ -2,6 +2,7 @@ package com.example.minesweeperbuilder;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
@@ -9,6 +10,12 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LibraryActivity extends AppCompatActivity implements LibraryFieldsRecyclerAdapter.OnFieldActionListener {
     SavedFieldsList savedFields = new SavedFieldsList();
@@ -42,6 +49,17 @@ public class LibraryActivity extends AppCompatActivity implements LibraryFieldsR
         backButton = findViewById(R.id.library_header_arrow);
         backButton.setOnClickListener(view -> {
             callback.handleOnBackPressed();
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+            Map<String, Object> testData = new HashMap<>();
+            testData.put("message", "hello firestore");
+            db.collection("test").add(testData);
+
+            db.collection("test").get().addOnSuccessListener(snapshot -> {
+                for (DocumentSnapshot doc : snapshot.getDocuments()) {
+                    Log.d("firestore", doc.getData().toString());
+                }
+            });
         });
     }
 
