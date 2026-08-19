@@ -30,6 +30,15 @@
         app:layout_constraintStart_toEndOf="@+id/lib_field_name"
         tools:layout_editor_absoluteY="0dp" />
 
+    <TextView
+        android:id="@+id/lib_upload_field"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/lib_delete_field"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/lib_delete_field"
         android:layout_width="wrap_content"

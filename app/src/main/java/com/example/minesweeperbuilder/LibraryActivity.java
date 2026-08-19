@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,7 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LibraryActivity extends AppCompatActivity implements LibraryFieldsRecyclerAdapter.OnFieldActionListener {
+public class LibraryActivity extends AppCompatActivity implements OnFieldActionListener{
     SavedFieldsList savedFields = new SavedFieldsList();
     RecyclerView libraryRecyclerView;
     LibraryFieldsRecyclerAdapter adapter;
@@ -49,17 +50,6 @@ public class LibraryActivity extends AppCompatActivity implements LibraryFieldsR
         backButton = findViewById(R.id.library_header_arrow);
         backButton.setOnClickListener(view -> {
             callback.handleOnBackPressed();
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-            Map<String, Object> testData = new HashMap<>();
-            testData.put("message", "hello firestore");
-            db.collection("test").add(testData);
-
-            db.collection("test").get().addOnSuccessListener(snapshot -> {
-                for (DocumentSnapshot doc : snapshot.getDocuments()) {
-                    Log.d("firestore", doc.getData().toString());
-                }
-            });
         });
     }
 
@@ -70,7 +60,8 @@ public class LibraryActivity extends AppCompatActivity implements LibraryFieldsR
         intent.putExtra("isFromLibrary", true);
         intent.putExtra("width", field.width);
         intent.putExtra("height", field.height);
-        intent.putExtra("simplifiedField", field.bombPositions);
+        int[] bombPosArray = field.bombPositions.stream().mapToInt(Integer::intValue).toArray();
+        intent.putExtra("simplifiedField", bombPosArray);
         startActivity(intent);
     }
 
@@ -78,5 +69,25 @@ public class LibraryActivity extends AppCompatActivity implements LibraryFieldsR
     public void onDeleteClick(SavedField field) {
         savedFields.removeField(this, savedFields.getFields().indexOf(field));
         adapter.setFields(savedFields.getFields());
+    }
+
+    @Override
+    public void onUploadClick(SavedField field) {
+        showFieldUploadDialog(field);
+    }
+
+    private void showFieldUploadDialog(SavedField field) {
+        new FieldUploadDialog(this, () -> {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+            db.collection("fields").document(field.id).get()
+                .addOnSuccessListener(snapshot -> {
+                    if (!snapshot.exists()) {
+                        db.collection("fields").document(field.id).set(field);
+                        Log.d("upload", "success");
+                    }
+                });
+
+        }).show();
     }
 }

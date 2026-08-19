@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import java.util.List;
+
 public class BuildingSavingFieldDialog extends Dialog {
     EditText fieldNameView;
     TextView warning;
@@ -21,13 +23,13 @@ public class BuildingSavingFieldDialog extends Dialog {
     OnFieldConfirmedListener listener;
     int width, height, bombCount;
     boolean portraitMode;
-    int[] simplifiedField;
+    List<Integer> simplifiedField;
 
     public interface OnFieldConfirmedListener {
         void onFieldConfirmed();
     }
 
-    public BuildingSavingFieldDialog(@NonNull Context context, OnFieldConfirmedListener listener, int width, int height, int bombCount, boolean portraitMode, int[] simplifiedField) {
+    public BuildingSavingFieldDialog(@NonNull Context context, OnFieldConfirmedListener listener, int width, int height, int bombCount, boolean portraitMode, List<Integer> simplifiedField) {
         super(context);
         this.listener = listener;
         this.width = width;

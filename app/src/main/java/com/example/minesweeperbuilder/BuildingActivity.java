@@ -158,7 +158,7 @@ public class BuildingActivity extends AppCompatActivity implements OnCellClickLi
                     return false;
                 }
             });
-        }, width, height, game.getNumberOfBombs(), settings.portraitOrientation, game.getSimplifiedGrid()).show();
+        }, width, height, game.getNumberOfBombs(), settings.portraitOrientation, game.getSimplifiedGridList()).show();
     }
 
     @Override

@@ -13,14 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class LibraryFieldsRecyclerAdapter extends RecyclerView.Adapter<LibraryFieldsRecyclerAdapter.LibraryFieldViewHolder> {
+public class LibraryFieldsRecyclerAdapter extends RecyclerView.Adapter<LibraryFieldsRecyclerAdapter.LibraryFieldViewHolder>  {
     private List<SavedField> fields;
     private OnFieldActionListener listener;
-
-    public interface OnFieldActionListener {
-        void onPlayClick(SavedField field);
-        void onDeleteClick(SavedField field);
-    }
 
     public LibraryFieldsRecyclerAdapter(List<SavedField> fields, OnFieldActionListener listener) {
         this.fields = fields;
@@ -51,13 +46,14 @@ public class LibraryFieldsRecyclerAdapter extends RecyclerView.Adapter<LibraryFi
     }
 
     class LibraryFieldViewHolder extends RecyclerView.ViewHolder {
-        TextView nameView, sizeAndMineCountView;
+        TextView nameView, sizeAndMineCountView, uploadButton;
         ImageView playButton, deleteButton;
 
         public LibraryFieldViewHolder(@NonNull View itemView) {
             super(itemView);
             nameView = itemView.findViewById(R.id.lib_field_name);
             sizeAndMineCountView = itemView.findViewById(R.id.lib_field_size);
+            uploadButton = itemView.findViewById(R.id.lib_upload_field);
             playButton = itemView.findViewById(R.id.lib_play_field);
             deleteButton = itemView.findViewById(R.id.lib_delete_field);
         }
@@ -67,6 +63,7 @@ public class LibraryFieldsRecyclerAdapter extends RecyclerView.Adapter<LibraryFi
             sizeAndMineCountView.setText(field.width + "x" + field.height + " - " + Integer.toString(field.bombCount) + " mines");
             playButton.setOnClickListener(view -> listener.onPlayClick(field));
             deleteButton.setOnClickListener(view -> listener.onDeleteClick(field));
+            uploadButton.setOnClickListener(view -> listener.onUploadClick(field));
         }
     }
 }
