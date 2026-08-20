@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
         }
     };
 
-    // timer and it's displaying
     Handler timerHandler = new Handler();
     Runnable timerRunnable = new Runnable() {
         @Override
@@ -216,12 +215,12 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
 
     private void calculateDimensions() {
         settings.load(this);
-        if (settings.portraitOrientation) {
-            width = Math.min(settings.buildingWidth, settings.buildingHeight);
-            height = Math.max(settings.buildingWidth, settings.buildingHeight);
-        } else {
-            width = Math.max(settings.buildingWidth, settings.buildingHeight);
-            height = Math.min(settings.buildingWidth, settings.buildingHeight);
-        }
+
+        int rawWidth = isPrebuiltField ? settings.buildingWidth : settings.width;
+        int rawHeight = isPrebuiltField ? settings.buildingHeight : settings.height;
+
+        width = settings.portraitOrientation ? Math.min(rawWidth, rawHeight) : Math.max(rawWidth, rawHeight);
+        height = settings.portraitOrientation ? Math.max(rawWidth, rawHeight) : Math.min(rawWidth, rawHeight);
+
     }
 }

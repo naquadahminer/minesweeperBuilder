@@ -18,7 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LibraryActivity extends AppCompatActivity implements OnFieldActionListener{
+public class LibraryActivity extends AppCompatActivity implements OnFieldActionListener {
     SavedFieldsList savedFields = new SavedFieldsList();
     RecyclerView libraryRecyclerView;
     LibraryFieldsRecyclerAdapter adapter;
