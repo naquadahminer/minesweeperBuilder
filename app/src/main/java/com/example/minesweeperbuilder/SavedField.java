@@ -21,4 +21,8 @@ public class SavedField {
         this.portraitMode = portraitMode;
         this.bombPositions = bombPositions;
     }
+
+    public SavedField() {
+        // empty constructor for firestore
+    }
 }

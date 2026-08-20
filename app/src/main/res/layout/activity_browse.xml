@@ -2,14 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="#eeeeee">
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/library_header"
+        android:id="@+id/browse_header"
         android:layout_width="409dp"
         android:layout_height="45dp"
         android:layout_marginStart="1dp"
@@ -22,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/library_header_arrow"
+            android:id="@+id/browse_header_arrow"
             android:layout_width="48dp"
             android:layout_height="match_parent"
             android:paddingStart="10dp"
@@ -32,31 +29,27 @@
             android:src="@drawable/arrow_back"/>
 
         <TextView
-            android:id="@+id/library_header_text"
+            android:id="@+id/browse_header_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:gravity="center"
-            android:text="Library" />
+            android:text="Field browser" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/library_recycler_view"
+        android:id="@+id/browse_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/library_header"
-        app:layout_constraintBottom_toTopOf="@+id/bottomLayout">
+        app:layout_constraintBottom_toTopOf="@id/browse_load_more_button"
+        app:layout_constraintTop_toBottomOf="@+id/browse_header" />
 
-    </androidx.recyclerview.widget.RecyclerView>
-
-    <LinearLayout
-        android:id="@+id/bottomLayout"
+    <Button
+        android:id="@+id/browse_load_more_button"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:text="Load more"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
