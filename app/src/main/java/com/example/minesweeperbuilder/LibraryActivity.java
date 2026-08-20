@@ -76,6 +76,18 @@ public class LibraryActivity extends AppCompatActivity implements OnFieldActionL
         showFieldUploadDialog(field);
     }
 
+    @Override
+    public void onRenameClick(SavedField field) {
+        // TODO: add rename functionality
+    }
+
+    @Override
+    public void onCloneClick(SavedField field) {
+        SavedField clone = field.clone();
+        savedFields.addField(this, clone);
+        adapter.setFields(savedFields.getFields());
+    }
+
     private void showFieldUploadDialog(SavedField field) {
         new FieldUploadDialog(this, () -> {
             FirebaseFirestore db = FirebaseFirestore.getInstance();

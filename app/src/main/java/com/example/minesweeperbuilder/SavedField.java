@@ -1,9 +1,12 @@
 package com.example.minesweeperbuilder;
 
+import androidx.annotation.NonNull;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class SavedField {
+public class SavedField implements Cloneable{
     public String name;
     String id;
     public int width;
@@ -24,5 +27,18 @@ public class SavedField {
 
     public SavedField() {
         // empty constructor for firestore
+    }
+
+    @NonNull
+    @Override
+    public SavedField clone() {
+        try {
+            SavedField clone = (SavedField) super.clone();
+            clone.bombPositions = new ArrayList<>(this.bombPositions);
+            clone.id = UUID.randomUUID().toString();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

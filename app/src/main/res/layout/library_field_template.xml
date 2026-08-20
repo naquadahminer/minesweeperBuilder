@@ -31,19 +31,15 @@
         tools:layout_editor_absoluteY="0dp" />
 
     <TextView
-        android:id="@+id/lib_upload_field"
+        android:id="@+id/lib_field_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Upload"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/lib_delete_field"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/lib_delete_field"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/trash_can"
+        android:text="..."
+        android:textStyle="bold"
+        android:paddingBottom="5dp"
+        android:textSize="20dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/lib_play_field"
         app:layout_constraintTop_toTopOf="parent" />

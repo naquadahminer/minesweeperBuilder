@@ -2,10 +2,12 @@ package com.example.minesweeperbuilder;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,24 +48,45 @@ public class LibraryFieldsRecyclerAdapter extends RecyclerView.Adapter<LibraryFi
     }
 
     class LibraryFieldViewHolder extends RecyclerView.ViewHolder {
-        TextView nameView, sizeAndMineCountView, uploadButton;
+        TextView nameView, sizeAndMineCountView, fieldMenuButton;
         ImageView playButton, deleteButton;
 
         public LibraryFieldViewHolder(@NonNull View itemView) {
             super(itemView);
             nameView = itemView.findViewById(R.id.lib_field_name);
             sizeAndMineCountView = itemView.findViewById(R.id.lib_field_size);
-            uploadButton = itemView.findViewById(R.id.lib_upload_field);
+            fieldMenuButton = itemView.findViewById(R.id.lib_field_menu);
             playButton = itemView.findViewById(R.id.lib_play_field);
-            deleteButton = itemView.findViewById(R.id.lib_delete_field);
         }
 
         public void bind(final SavedField field) {
             nameView.setText(field.name);
             sizeAndMineCountView.setText(field.width + "x" + field.height + " - " + Integer.toString(field.bombCount) + " mines");
+            fieldMenuButton.setOnClickListener(view -> openPopupMenu(view, field));
             playButton.setOnClickListener(view -> listener.onPlayClick(field));
-            deleteButton.setOnClickListener(view -> listener.onDeleteClick(field));
-            uploadButton.setOnClickListener(view -> listener.onUploadClick(field));
+        }
+
+        private void openPopupMenu(View v, SavedField field) {
+            PopupMenu menu = new PopupMenu(v.getContext(), v);
+            menu.getMenuInflater().inflate(R.menu.library_field_menu, menu.getMenu());
+
+            menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    if (item.getTitle().equals("Delete")) {
+                        listener.onDeleteClick(field);
+                    } else if (item.getTitle().equals("Rename")) {
+                        listener.onRenameClick(field);
+                    } else if (item.getTitle().equals("Upload")) {
+                        listener.onUploadClick(field);
+                    } else if (item.getTitle().equals("Clone")) {
+                        listener.onCloneClick(field);
+                    }
+
+                    return true;
+                }
+            });
+            menu.show();
         }
     }
 }
