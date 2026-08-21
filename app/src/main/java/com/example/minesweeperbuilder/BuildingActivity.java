@@ -99,7 +99,7 @@ public class BuildingActivity extends AppCompatActivity implements OnCellClickLi
         gridRecyclerView.setNestedScrollingEnabled(false);
         game = new BuildingGame(height, width, numberOfBombs);
         if (loadingPrebuiltField) {
-            game.getMineGrid().setMineGrid(Objects.requireNonNull(getIntent().getIntArrayExtra("simplifiedField")));
+            game.getMineGrid().setMineGrid(Objects.requireNonNull(getIntent().getByteArrayExtra("simplifiedField")), height, width);
             game.getMineGrid().revealAllCells();
         }
         mineGridRecyclerAdapter = new MineGridRecyclerAdapter(game.getMineGrid().getCells(), this);

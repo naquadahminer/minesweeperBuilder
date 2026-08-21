@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
         int cellIndex = game.getMineGrid().getCells().indexOf(cell);
         if (game.isFieldClosed()) {
             if (isPrebuiltField) {
-                game.getMineGrid().setMineGrid(Objects.requireNonNull(getIntent().getIntArrayExtra("simplifiedField")));
+                game.getMineGrid().setMineGrid(Objects.requireNonNull(getIntent().getByteArrayExtra("simplifiedField"), height, width));
             } else {
                 game.getMineGrid().generateGrid(settings.bombCount, cellIndex);
             }

@@ -139,9 +139,9 @@ public class MineGrid {
         }
     }
 
-    public void setMineGrid(int[] simplifiedField) {
-        for (int i = 0; i < simplifiedField.length; i++) {
-            if (simplifiedField[i] == -1) {
+    public void setMineGrid(byte[] bitArray, int height, int width) {
+        for (int i = 0; i < height*width; i++) {
+            if (bitArray[i/8] >> (i % 8) % 2 == 1) {
                 cells.set(i, new Cell(Cell.BOMB, false));
             }
         }

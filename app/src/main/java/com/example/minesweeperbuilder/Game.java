@@ -12,16 +12,16 @@ public class Game {
         this.numberOfBombs = numberOfBombs;
     }
 
-    public int[] getSimplifiedGrid() {
-        int[] simplifiedField = new int[mineGrid.getCells().size()];
+    public byte[] getSimplifiedGrid() {
+        byte[] bitArray = new byte[(mineGrid.getCells().size() + 7) / 8];
+        int currIndex = 0;
         for (Cell cell: mineGrid.getCells()) {
-            if (cell.getValue() != Cell.BOMB) {
-                simplifiedField[mineGrid.getCells().indexOf(cell)] = 0;
-            } else {
-                simplifiedField[mineGrid.getCells().indexOf(cell)] = -1;
+            if (cell.getValue() == Cell.BOMB) {
+                bitArray[currIndex/8] |= 1 << (currIndex % 8);
             }
+            currIndex++;
         }
-        return simplifiedField;
+        return bitArray;
     }
 
     public List<Integer> getSimplifiedGridList() {
