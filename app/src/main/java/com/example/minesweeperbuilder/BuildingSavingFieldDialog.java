@@ -54,7 +54,6 @@ public class BuildingSavingFieldDialog extends Dialog {
             fieldName = fieldNameView.getText().toString();
             if (fieldName.isEmpty()) {
                 warning.setText("Field name is empty");
-                System.out.println(fieldName);
             } else if (savedFields.containsField(getContext(), fieldName)) {
                 warning.setText("Field name already exists");
             } else if (fieldName.length() >= 11) {

@@ -8,7 +8,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 
 public class FieldUploadDialog extends Dialog {
-    private FieldUploadDialog.OnUploadConfirmedListener listener;
+    private OnUploadConfirmedListener listener;
     private Button confirmButton;
 
 

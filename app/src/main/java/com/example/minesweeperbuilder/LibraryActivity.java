@@ -78,7 +78,13 @@ public class LibraryActivity extends AppCompatActivity implements OnFieldActionL
 
     @Override
     public void onRenameClick(SavedField field) {
-        // TODO: add rename functionality
+        showFieldRenameDialog(field);
+    }
+
+    private void showFieldRenameDialog(SavedField field) {
+        new FieldRenameDialog(this, field, () -> {
+            adapter.setFields(savedFields.getFields());
+        }).show();
     }
 
     @Override
